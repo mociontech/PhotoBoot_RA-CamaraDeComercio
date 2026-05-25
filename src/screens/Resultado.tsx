@@ -1,111 +1,45 @@
 import { useNavigate } from 'react-router-dom'
 
-const imgResult = 'https://www.figma.com/api/mcp/asset/92f8e2f9-d7dc-4240-90f8-f2e28353003b'
-const imgBall = 'https://www.figma.com/api/mcp/asset/0453b4f5-a34f-4943-9b4d-943c34b676f8'
-const imgOverlay = 'https://www.figma.com/api/mcp/asset/e781ff63-2fcd-4316-8e4f-944da282b09a'
-const imgMaskGroup = 'https://www.figma.com/api/mcp/asset/d0d7bb95-3833-4998-b440-60cc43ea128b'
-const imgLogoGroup = 'https://www.figma.com/api/mcp/asset/5a4a902c-9d47-4b30-87ea-3d2da4d383f1'
+// Assets — Figma node 34:162
+const imgResult    = 'https://www.figma.com/api/mcp/asset/92f8e2f9-d7dc-4240-90f8-f2e28353003b' // imgImage1 — generated photo
+const imgExclude   = 'https://www.figma.com/api/mcp/asset/e781ff63-2fcd-4316-8e4f-944da282b09a' // green side strips frame
+const imgMaskGroup = 'https://www.figma.com/api/mcp/asset/d0d7bb95-3833-4998-b440-60cc43ea128b' // layered mask overlay
+const imgBall      = 'https://www.figma.com/api/mcp/asset/0453b4f5-a34f-4943-9b4d-943c34b676f8' // imgBalon1 — soccer ball
+const imgLogo      = 'https://www.figma.com/api/mcp/asset/5a4a902c-9d47-4b30-87ea-3d2da4d383f1' // imgGroup — "Mocion" top-center
 
 export default function Resultado() {
   const navigate = useNavigate()
 
   return (
-    <div
-      className="relative w-full h-full overflow-hidden"
-      style={{ background: '#e8e8e8' }}
-    >
-      {/* Full-screen generated result image */}
-      <img
-        alt="Imagen generada"
-        src={imgResult}
-        style={{
-          position: 'absolute',
-          left: 0,
-          top: 0,
-          width: '100%',
-          height: '100%',
-          objectFit: 'cover',
-          pointerEvents: 'none',
-        }}
-      />
+    <div style={{ position: 'relative', width: '1080px', height: '1920px', background: '#e8e8e8', overflow: 'hidden' }}>
 
-      {/* Overlay frame (green strips) */}
-      <img
-        alt=""
-        src={imgOverlay}
-        style={{
-          position: 'absolute',
-          left: 0,
-          top: 0,
-          width: '1080px',
-          height: '1920px',
-          display: 'block',
-          pointerEvents: 'none',
-        }}
-      />
+      {/* Generated photo — full screen */}
+      <img alt="Imagen generada" src={imgResult} style={{ position: 'absolute', left: '1px', top: 0, width: '1080px', height: '1920px', objectFit: 'cover', pointerEvents: 'none' }} />
+
+      {/* Green strips frame overlay (Exclude shape) */}
+      <img alt="" src={imgExclude} style={{ position: 'absolute', left: 0, top: 0, width: '1080px', height: '1920px', display: 'block', pointerEvents: 'none' }} />
 
       {/* Mask group overlay */}
-      <img
-        alt=""
-        src={imgMaskGroup}
-        style={{
-          position: 'absolute',
-          left: 0,
-          top: 0,
-          width: '1080px',
-          height: '1920px',
-          display: 'block',
-          pointerEvents: 'none',
-        }}
-      />
+      <img alt="" src={imgMaskGroup} style={{ position: 'absolute', left: 0, top: 0, width: '1080px', height: '1920px', display: 'block', pointerEvents: 'none' }} />
 
-      {/* Soccer ball bottom-right */}
-      <img
-        alt=""
-        src={imgBall}
-        style={{
-          position: 'absolute',
-          right: '34px',
-          bottom: '84px',
-          width: '339px',
-          height: '338px',
-          objectFit: 'cover',
-          pointerEvents: 'none',
-        }}
-      />
+      {/* Soccer ball — bottom-right (left=707, top=1516, w=339, h=338) */}
+      <img alt="" src={imgBall} style={{ position: 'absolute', left: '707px', top: '1516px', width: '339px', height: '338px', objectFit: 'cover', pointerEvents: 'none' }} />
 
-      {/* Logo */}
-      <div style={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)', top: '33px', height: '43px' }}>
-        <img alt="Mocion" src={imgLogoGroup} style={{ height: '100%', width: 'auto', display: 'block' }} />
-      </div>
+      {/* Logo "Mocion" — top-center (inset 1.74%/32.23%/93.9%/32.22% → left=348, top=33, w=384, h=84) */}
+      <img alt="Mocion" src={imgLogo} style={{ position: 'absolute', left: '348px', top: '33px', width: '384px', height: '84px', display: 'block' }} />
 
-      {/* Continue to Agradecimiento */}
+      {/* Continuar button */}
       <button
         onClick={() => navigate('/agradecimiento')}
         style={{
-          position: 'absolute',
-          left: '140px',
-          bottom: '60px',
-          width: '800px',
-          height: '120px',
-          background: '#232e2e',
-          borderRadius: '60px',
-          border: 'none',
-          cursor: 'pointer',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
+          position: 'absolute', left: '140px', bottom: '60px',
+          width: '800px', height: '120px',
+          background: '#232e2e', borderRadius: '60px', border: 'none', cursor: 'pointer',
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
           zIndex: 10,
         }}
       >
-        <span
-          style={{
-            fontFamily: '"Nunito", "Proxima Nova", sans-serif',
-            fontWeight: 800,
-            fontSize: '60px',
-            color: '#fff',
-          }}
-        >
+        <span style={{ fontFamily: '"Nunito", sans-serif', fontWeight: 800, fontSize: '60px', color: '#fff', lineHeight: 1 }}>
           Continuar
         </span>
       </button>
