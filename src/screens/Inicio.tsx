@@ -1,7 +1,8 @@
 import { useNavigate } from 'react-router-dom'
+import Particles from '../components/Particles'
 
 // Assets — Figma node 34:20246
-const imgFutbolista = 'https://www.figma.com/api/mcp/asset/e65950f0-7d45-4216-a8ad-d4407f12d07b'
+const imgFutbolista = '/Futbolista.png'
 const imgStar2      = 'https://www.figma.com/api/mcp/asset/be8734ae-a134-4c46-937e-18f9aa716432'
 const imgPolygon3   = 'https://www.figma.com/api/mcp/asset/1f8ffc9c-6580-4734-b913-1fc3b154d30e'
 const imgStar5      = 'https://www.figma.com/api/mcp/asset/ba3a9a0c-f61d-44bc-a65e-07b6acbb7155'
@@ -15,6 +16,8 @@ export default function Inicio() {
 
   return (
     <div style={{ position: 'relative', width: '1080px', height: '1920px', background: '#82ea6f', overflow: 'hidden' }}>
+
+      <Particles color="rgba(255,255,255,0.85)" count={28} />
 
       {/* Star 2 — top-left decoration */}
       <img alt="" src={imgStar2} style={{ position: 'absolute', left: '-510px', top: '-539px', width: '1077px', height: '1051.5px', pointerEvents: 'none' }} />
@@ -43,15 +46,15 @@ export default function Inicio() {
         </div>
       </div>
 
-      {/* Soccer player */}
-      <img alt="" src={imgFutbolista} style={{ position: 'absolute', left: '-104px', top: '93px', width: '1219px', height: '997px', objectFit: 'cover', objectPosition: 'bottom', pointerEvents: 'none' }} />
+      {/* Soccer player — floats up/down */}
+      <img alt="" src={imgFutbolista} className="float-anim" style={{ position: 'absolute', left: '-104px', top: '93px', width: '1219px', height: '997px', objectFit: 'contain', objectPosition: 'center bottom', pointerEvents: 'none' }} />
 
-      {/* Logo — top right (mark + "Experience Tech") */}
-      <img alt="" src={imgLogoMark} style={{ position: 'absolute', left: '737px', top: '83px',  width: '243px', height: '53px', display: 'block' }} />
-      <img alt="" src={imgLogoText} style={{ position: 'absolute', left: '737px', top: '145px', width: '243px', height: '28px', display: 'block' }} />
+      {/* Logo — top right */}
+      <img alt="" className="slide-in-down"    src={imgLogoMark} style={{ position: 'absolute', left: '737px', top: '83px',  width: '243px', height: '53px', display: 'block' }} />
+      <img alt="" className="slide-in-down d1" src={imgLogoText} style={{ position: 'absolute', left: '737px', top: '145px', width: '243px', height: '28px', display: 'block' }} />
 
       {/* Title */}
-      <div style={{
+      <div className="slide-in-left d3" style={{
         position: 'absolute', left: '112px', top: '1105px', width: '857px', height: '161px',
         display: 'flex', flexDirection: 'column', justifyContent: 'center',
         fontFamily: '"Bungee", sans-serif', fontSize: '80px', lineHeight: '90px',
@@ -62,7 +65,7 @@ export default function Inicio() {
       </div>
 
       {/* Subtitle */}
-      <div style={{
+      <div className="slide-in-right d4" style={{
         position: 'absolute', left: '117px', top: '1313px', width: '848px', height: '160px',
         display: 'flex', alignItems: 'center',
         fontFamily: '"Roboto", sans-serif', fontWeight: 400, fontSize: '50px', lineHeight: '55px',
@@ -78,6 +81,7 @@ export default function Inicio() {
 
       {/* CTA button */}
       <button
+        className="kiosk-btn btn-pulse"
         onClick={() => navigate('/registro')}
         style={{
           position: 'absolute', left: '99px', top: '1581px',

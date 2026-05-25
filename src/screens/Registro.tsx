@@ -57,13 +57,13 @@ export default function Registro() {
       <img alt="" src={imgLogoSmall} style={{ position: 'absolute', left: '98px', top: '95px', width: '147px', height: '43px', display: 'block' }} />
 
       {/* Mocion brand mark */}
-      <img alt="" src={imgBrandMark} style={{ position: 'absolute', left: '219px', top: '397px', width: '642px', height: '119px', display: 'block' }} />
+      <img alt="" className="slide-in-down"    src={imgBrandMark} style={{ position: 'absolute', left: '219px', top: '397px', width: '642px', height: '119px', display: 'block' }} />
 
       {/* Experience Tech */}
-      <img alt="" src={imgBrandText} style={{ position: 'absolute', left: '219px', top: '535px', width: '642px', height: '63px', display: 'block' }} />
+      <img alt="" className="slide-in-down d1" src={imgBrandText} style={{ position: 'absolute', left: '219px', top: '535px', width: '642px', height: '63px', display: 'block' }} />
 
       {/* REGISTRO title */}
-      <div style={{
+      <div className="slide-in-left d2" style={{
         position: 'absolute', left: '99px', top: '719px', width: '882px', height: '78px',
         display: 'flex', alignItems: 'center', justifyContent: 'center',
         fontFamily: '"Bungee", sans-serif', fontSize: '97px', lineHeight: 'normal',
@@ -73,7 +73,7 @@ export default function Registro() {
       </div>
 
       {/* ── Input: Tu nombre ── top=881 */}
-      <div style={{ position: 'absolute', left: '98px', top: '881px', width: '882px', height: '99px', background: 'rgba(255,255,255,0.15)', border: '1.5px solid #1e1e1e', borderRadius: '24px', boxSizing: 'border-box', overflow: 'hidden' }}>
+      <div className="input-row slide-in-right d2" style={{ position: 'absolute', left: '98px', top: '881px', width: '882px', height: '99px', background: 'rgba(255,255,255,0.15)', borderRadius: '24px', boxSizing: 'border-box', overflow: 'hidden' }}>
         <input type="text" value={nombre} onChange={e => setNombre(e.target.value)} style={inputStyle} />
         {!nombre && <span style={placeholderStyle}>Tu nombre</span>}
       </div>
@@ -81,7 +81,7 @@ export default function Registro() {
       <img alt="" src={imgDot}         style={{ position: 'absolute', left: '213px', top: '930px',  width: '12px', height: '12px', display: 'block', pointerEvents: 'none' }} />
 
       {/* ── Input: Tu empresa ── top=1013 */}
-      <div style={{ position: 'absolute', left: '98px', top: '1013px', width: '882px', height: '99px', background: 'rgba(255,255,255,0.15)', border: '1.5px solid #1e1e1e', borderRadius: '24px', boxSizing: 'border-box', overflow: 'hidden' }}>
+      <div className="input-row slide-in-right d3" style={{ position: 'absolute', left: '98px', top: '1013px', width: '882px', height: '99px', background: 'rgba(255,255,255,0.15)', borderRadius: '24px', boxSizing: 'border-box', overflow: 'hidden' }}>
         <input type="text" value={empresa} onChange={e => setEmpresa(e.target.value)} style={inputStyle} />
         {!empresa && <span style={placeholderStyle}>Tu empresa</span>}
       </div>
@@ -89,7 +89,7 @@ export default function Registro() {
       <img alt="" src={imgDot}         style={{ position: 'absolute', left: '213px', top: '1058px', width: '12px', height: '12px', display: 'block', pointerEvents: 'none' }} />
 
       {/* ── Input: Tu correo ── top=1145 */}
-      <div style={{ position: 'absolute', left: '98px', top: '1145px', width: '882px', height: '99px', background: 'rgba(255,255,255,0.15)', border: '1.5px solid #1e1e1e', borderRadius: '24px', boxSizing: 'border-box', overflow: 'hidden' }}>
+      <div className="input-row slide-in-right d4" style={{ position: 'absolute', left: '98px', top: '1145px', width: '882px', height: '99px', background: 'rgba(255,255,255,0.15)', borderRadius: '24px', boxSizing: 'border-box', overflow: 'hidden' }}>
         <input type="email" value={correo} onChange={e => setCorreo(e.target.value)} style={inputStyle} />
         {!correo && <span style={placeholderStyle}>Tu correo</span>}
       </div>
@@ -97,7 +97,7 @@ export default function Registro() {
       <img alt="" src={imgDot}         style={{ position: 'absolute', left: '213px', top: '1191px', width: '12px', height: '12px', display: 'block', pointerEvents: 'none' }} />
 
       {/* ── Input: Tu celular ── top=1277 */}
-      <div style={{ position: 'absolute', left: '98px', top: '1277px', width: '882px', height: '99px', background: 'rgba(255,255,255,0.15)', border: '1.5px solid #1e1e1e', borderRadius: '24px', boxSizing: 'border-box', overflow: 'hidden' }}>
+      <div className="input-row slide-in-right d5" style={{ position: 'absolute', left: '98px', top: '1277px', width: '882px', height: '99px', background: 'rgba(255,255,255,0.15)', borderRadius: '24px', boxSizing: 'border-box', overflow: 'hidden' }}>
         <input type="tel" value={celular} onChange={e => setCelular(e.target.value)} style={inputStyle} />
         {!celular && <span style={placeholderStyle}>Tu celular</span>}
       </div>
@@ -106,6 +106,7 @@ export default function Registro() {
 
       {/* Comenzar button — center, top=1565 */}
       <button
+        className="kiosk-btn btn-pulse"
         onClick={() => navigate('/instrucciones')}
         style={{
           position: 'absolute', left: '198px', top: '1565px', width: '684px', height: '133px',

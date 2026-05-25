@@ -30,6 +30,7 @@ export default function Resultado() {
 
       {/* Continuar button */}
       <button
+        className="kiosk-btn btn-pulse"
         onClick={() => navigate('/agradecimiento')}
         style={{
           position: 'absolute', left: '140px', bottom: '60px',

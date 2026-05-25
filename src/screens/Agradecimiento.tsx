@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom'
+import Particles from '../components/Particles'
 
 // Assets — Figma node 87:286
 const imgPolygon1    = 'https://www.figma.com/api/mcp/asset/6890bffe-e1ed-4495-8e59-c32d67dd0dcc'
@@ -13,6 +14,8 @@ export default function Agradecimiento() {
 
   return (
     <div style={{ position: 'relative', width: '1080px', height: '1920px', background: '#6fcfea', overflow: 'hidden' }}>
+
+      <Particles color="rgba(255,255,255,0.75)" count={24} />
 
       {/* Polygon 1 — bottom-left */}
       <div style={{ position: 'absolute', left: '-748px', top: '839px', width: '1459px', height: '1459px', display: 'flex', alignItems: 'center', justifyContent: 'center', pointerEvents: 'none' }}>
@@ -36,13 +39,13 @@ export default function Agradecimiento() {
       <img alt="" src={imgLogoSmall} style={{ position: 'absolute', left: '98px', top: '95px', width: '147px', height: '43px', display: 'block' }} />
 
       {/* Mocion brand mark */}
-      <img alt="" src={imgBrandMark} style={{ position: 'absolute', left: '219px', top: '294px', width: '642px', height: '140px', display: 'block' }} />
+      <img alt="" className="slide-in-down"    src={imgBrandMark} style={{ position: 'absolute', left: '219px', top: '294px', width: '642px', height: '140px', display: 'block' }} />
 
       {/* Experience Tech */}
-      <img alt="" src={imgBrandText} style={{ position: 'absolute', left: '219px', top: '457px', width: '642px', height: '63px', display: 'block' }} />
+      <img alt="" className="slide-in-down d1" src={imgBrandText} style={{ position: 'absolute', left: '219px', top: '457px', width: '642px', height: '63px', display: 'block' }} />
 
-      {/* ¡Gracias por participar! (center 530.5,804.5 h=237 → top=686) */}
-      <div style={{
+      {/* ¡Gracias por participar! */}
+      <div className="slide-in-left d3" style={{
         position: 'absolute', left: '114px', top: '686px', width: '833px', height: '237px',
         display: 'flex', alignItems: 'center', justifyContent: 'center',
         fontFamily: '"Nunito", sans-serif', fontWeight: 800, fontSize: '130px', lineHeight: '108px',
@@ -51,8 +54,8 @@ export default function Agradecimiento() {
         ¡Gracias por participar!
       </div>
 
-      {/* Subtitle (center 540,1026.5 h=173 → top=940) */}
-      <div style={{
+      {/* Subtitle */}
+      <div className="slide-in-right d4" style={{
         position: 'absolute', left: '214px', top: '940px', width: '652px', height: '173px',
         display: 'flex', alignItems: 'center', justifyContent: 'center',
         fontFamily: '"League Spartan", "Nunito", sans-serif', fontWeight: 300, fontSize: '48.75px', lineHeight: '53px',
@@ -65,16 +68,16 @@ export default function Agradecimiento() {
       </div>
 
       {/* QR Code (left=365, top=1177, w=350, h=350) */}
-      <div style={{
+      <div className="qr-enter" style={{
         position: 'absolute', left: '365px', top: '1177px', width: '350px', height: '350px',
         background: '#fff', borderRadius: '12px', overflow: 'hidden',
-        boxShadow: '0 4px 24px rgba(0,0,0,0.1)',
       }}>
         <img alt="Código QR" src={imgQR} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
       </div>
 
       {/* Finalizar button (left=191, top=1625) */}
       <button
+        className="kiosk-btn btn-pulse"
         onClick={() => navigate('/')}
         style={{
           position: 'absolute', left: '191px', top: '1625px', width: '684px', height: '133px',

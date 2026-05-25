@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import Particles from '../components/Particles'
 
 // Assets — Figma node 87:28
 const imgExclude      = 'https://www.figma.com/api/mcp/asset/8cc720b6-e892-4206-9c7a-e31fba36c12d' // green frame
@@ -25,6 +26,8 @@ export default function Contador() {
   return (
     <div style={{ position: 'relative', width: '1080px', height: '1920px', background: '#000', overflow: 'hidden' }}>
 
+      <Particles color="rgba(130,234,111,0.7)" count={20} />
+
       {/* Green frame overlay (Exclude shape) */}
       <img alt="" src={imgExclude} style={{ position: 'absolute', left: 0, top: 0, width: '1080px', height: '1920px', display: 'block', pointerEvents: 'none' }} />
 
@@ -35,7 +38,7 @@ export default function Contador() {
       <img alt="" src={imgBalon1} style={{ position: 'absolute', left: '707px', top: '1516px', width: '339px', height: '338px', objectFit: 'cover', pointerEvents: 'none' }} />
 
       {/* Mocion logo — top center */}
-      <img alt="" src={imgLogo} style={{ position: 'absolute', left: '348px', top: '33px', width: '384px', height: '84px', display: 'block' }} />
+      <img alt="" className="slide-in-down" src={imgLogo} style={{ position: 'absolute', left: '348px', top: '33px', width: '384px', height: '84px', display: 'block' }} />
 
       {/* Countdown number */}
       <div style={{
@@ -46,11 +49,12 @@ export default function Contador() {
         textShadow: '0px 4px 60px rgba(0,0,0,0.5)',
         pointerEvents: 'none',
       }}>
-        {count > 0 ? count : ''}
+        {count > 0 && <span key={count} className="num-pop">{count}</span>}
       </div>
 
       {/* Repetir button */}
       <button
+        className="kiosk-btn"
         onClick={() => setCount(3)}
         style={{ position: 'absolute', left: '148px', top: '1535px', width: '136px', height: '136px', padding: 0, border: 'none', background: 'transparent', cursor: 'pointer' }}
       >
@@ -62,6 +66,7 @@ export default function Contador() {
 
       {/* Siguiente button */}
       <button
+        className="kiosk-btn"
         onClick={() => navigate('/loader')}
         style={{ position: 'absolute', left: '324px', top: '1535px', width: '136px', height: '136px', padding: 0, border: 'none', background: 'transparent', cursor: 'pointer' }}
       >

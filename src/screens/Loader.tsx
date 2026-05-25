@@ -43,14 +43,12 @@ export default function Loader() {
       <img
         alt="Cargando…"
         src={imgSpinner}
-        style={{
-          position: 'absolute', left: '341px', top: '538px', width: '397px', height: '397px', display: 'block',
-          animation: 'spin 1.2s linear infinite',
-        }}
+        className="spinner-glow"
+        style={{ position: 'absolute', left: '341px', top: '538px', width: '397px', height: '397px', display: 'block' }}
       />
 
       {/* Text (center 540,1216.5 h=173 → left=116, top=1130) */}
-      <div style={{
+      <div className="text-fade" style={{
         position: 'absolute', left: '116px', top: '1130px', width: '848px', height: '173px',
         display: 'flex', alignItems: 'center', justifyContent: 'center',
         fontFamily: '"Nunito", sans-serif', fontWeight: 700, fontSize: '80px', lineHeight: '90px',
@@ -59,10 +57,6 @@ export default function Loader() {
       }}>
         Espera el procesamiento de tu visión
       </div>
-
-      <style>{`
-        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-      `}</style>
     </div>
   )
 }

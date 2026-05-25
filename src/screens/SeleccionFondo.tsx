@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import Particles from '../components/Particles'
 
 // Assets — Figma node 34:40292
 const imgPolygon1       = 'https://www.figma.com/api/mcp/asset/4a407757-442c-4cb9-ae9a-d618dd0ec8af'
@@ -21,6 +22,8 @@ export default function SeleccionFondo() {
   return (
     <div style={{ position: 'relative', width: '1080px', height: '1920px', background: '#6fcfea', overflow: 'hidden' }}>
 
+      <Particles color="rgba(255,255,255,0.8)" count={22} />
+
       {/* Polygon 1 — bottom-left decoration */}
       <div style={{ position: 'absolute', left: '-510px', top: '438px', width: '1313px', height: '1275px', display: 'flex', alignItems: 'center', justifyContent: 'center', pointerEvents: 'none' }}>
         <div style={{ transform: 'rotate(-20.1deg)', flexShrink: 0 }}>
@@ -35,14 +38,14 @@ export default function SeleccionFondo() {
         </div>
       </div>
 
-      {/* Nav icons top-left (calc: 540-368.5-73.5=98px, top=95) */}
-      <img alt="" src={imgLogoSmall} style={{ position: 'absolute', left: '98px', top: '95px', width: '147px', height: '43px', display: 'block' }} />
+      {/* Nav icons top-left */}
+      <img alt="" className="slide-in-down"    src={imgLogoSmall} style={{ position: 'absolute', left: '98px', top: '95px', width: '147px', height: '43px', display: 'block' }} />
 
-      {/* "Mocion" logo top-right (inset 4.11%/9.26%/92.54%/63.52% → left=686, top=79, w=294, h=64) */}
-      <img alt="" src={imgLogoRight} style={{ position: 'absolute', left: '686px', top: '79px', width: '294px', height: '64px', display: 'block' }} />
+      {/* "Mocion" logo top-right */}
+      <img alt="" className="slide-in-down d1" src={imgLogoRight} style={{ position: 'absolute', left: '686px', top: '79px', width: '294px', height: '64px', display: 'block' }} />
 
-      {/* Title (center 539.5,528.5 h=181 → left=111, top=438) */}
-      <div style={{
+      {/* Title */}
+      <div className="slide-in-left d2" style={{
         position: 'absolute', left: '111px', top: '438px', width: '857px', height: '181px',
         display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
         fontFamily: '"Bungee", sans-serif', fontSize: '100px', lineHeight: '90px',
@@ -61,6 +64,7 @@ export default function SeleccionFondo() {
 
       {/* Card 1 — estadio 1 (left) */}
       <button
+        className="card-hover slide-in-left d3"
         onClick={() => setSelected(1)}
         style={{
           position: 'absolute', left: '202px', top: '676px',
@@ -69,7 +73,7 @@ export default function SeleccionFondo() {
           borderRadius: '24px', overflow: 'hidden',
           outline: selected === 1 ? '8px solid #232e2e' : '4px solid transparent',
           outlineOffset: '0px',
-          transition: 'outline 0.15s',
+          transition: 'transform 0.2s ease, filter 0.18s ease, box-shadow 0.2s ease, outline 0.15s',
         }}
       >
         <img
@@ -91,6 +95,7 @@ export default function SeleccionFondo() {
 
       {/* Card 2 — estadio 2 (right) */}
       <button
+        className="card-hover slide-in-right d3"
         onClick={() => setSelected(2)}
         style={{
           position: 'absolute', left: '558px', top: '676px',
@@ -99,7 +104,7 @@ export default function SeleccionFondo() {
           borderRadius: '24px', overflow: 'hidden',
           outline: selected === 2 ? '8px solid #232e2e' : '4px solid transparent',
           outlineOffset: '0px',
-          transition: 'outline 0.15s',
+          transition: 'transform 0.2s ease, filter 0.18s ease, box-shadow 0.2s ease, outline 0.15s',
         }}
       >
         <img
@@ -121,6 +126,7 @@ export default function SeleccionFondo() {
 
       {/* Continuar button (center 540.5 → left=113, top=1456, w=855, h=133) */}
       <button
+        className={`kiosk-btn${selected ? ' btn-pulse' : ''}`}
         onClick={() => { if (selected) navigate('/contador') }}
         style={{
           position: 'absolute', left: '113px', top: '1456px', width: '855px', height: '133px',

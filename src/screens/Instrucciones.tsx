@@ -26,14 +26,14 @@ export default function Instrucciones() {
         </div>
       </div>
 
-      {/* Brand mark — (inset 8.85%/20.28%/83.84%/20.28% → 219,170 642×140) */}
-      <img alt="" src={imgBrandMark} style={{ position: 'absolute', left: '219px', top: '170px', width: '642px', height: '140px', display: 'block' }} />
+      {/* Brand mark */}
+      <img alt="" className="slide-in-down"    src={imgBrandMark} style={{ position: 'absolute', left: '219px', top: '170px', width: '642px', height: '140px', display: 'block' }} />
 
-      {/* Brand text "Experience Tech" — (inset 17.32%/20.28%/78.81%/20.28% → 219,333 642×74) */}
-      <img alt="" src={imgBrandText} style={{ position: 'absolute', left: '219px', top: '333px', width: '642px', height: '74px', display: 'block' }} />
+      {/* Brand text "Experience Tech" */}
+      <img alt="" className="slide-in-down d1" src={imgBrandText} style={{ position: 'absolute', left: '219px', top: '333px', width: '642px', height: '74px', display: 'block' }} />
 
-      {/* Title "Instrucciones" (center 539.5,603.5 h=103 → left=111, top=552) */}
-      <div style={{
+      {/* Title "Instrucciones" */}
+      <div className="slide-in-left d2" style={{
         position: 'absolute', left: '111px', top: '552px', width: '857px', height: '103px',
         display: 'flex', alignItems: 'center', justifyContent: 'center',
         fontFamily: '"Bungee", sans-serif', fontSize: '92px', lineHeight: '90px',
@@ -42,8 +42,8 @@ export default function Instrucciones() {
         Instrucciones
       </div>
 
-      {/* Numbered list (left=103, top=740, w=844, h=614) */}
-      <ol style={{
+      {/* Numbered list */}
+      <ol className="slide-in-right d3" style={{
         position: 'absolute', left: '103px', top: '740px', width: '844px',
         fontFamily: '"Roboto", sans-serif', fontWeight: 400, fontSize: '40px', lineHeight: '50px',
         color: '#232e2e', paddingLeft: '60px', margin: 0, listStyle: 'decimal',
@@ -69,6 +69,7 @@ export default function Instrucciones() {
 
       {/* Continuar button (center 540.5 → left=113, top=1456, w=855, h=133) */}
       <button
+        className="kiosk-btn btn-pulse"
         onClick={() => navigate('/seleccion-fondo')}
         style={{
           position: 'absolute', left: '113px', top: '1456px', width: '855px', height: '133px',
