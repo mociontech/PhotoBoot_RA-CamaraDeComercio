@@ -1,0 +1,28 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Kiosk canvas: fixed 1080×1920, scaled to fit viewport */
+html, body, #root {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background: #111;
+}
+
+.screen-canvas {
+  position: absolute;
+  width: 1080px;
+  height: 1920px;
+  transform-origin: top left;
+  overflow: hidden;
+}
+
+/* Proxima Nova fallback via Nunito weight mapping */
+.font-proxima-light   { font-family: "Proxima Nova", "Nunito", sans-serif; font-weight: 300; }
+.font-proxima-regular { font-family: "Proxima Nova", "Nunito", sans-serif; font-weight: 400; }
+.font-proxima-semibold{ font-family: "Proxima Nova", "Nunito", sans-serif; font-weight: 600; }
+.font-proxima-bold    { font-family: "Proxima Nova", "Nunito", sans-serif; font-weight: 700; }
+.font-proxima-extrabold { font-family: "Proxima Nova", "Nunito", sans-serif; font-weight: 800; }
