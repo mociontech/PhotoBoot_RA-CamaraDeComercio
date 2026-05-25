@@ -1,116 +1,115 @@
-import { useState } from 'react'
+import { type CSSProperties, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-// Assets — Figma node 1:37
-const imgImage10        = 'https://www.figma.com/api/mcp/asset/a98e424d-2549-45a4-b2f2-4abee97d7eeb'
-const imgImage9         = 'https://www.figma.com/api/mcp/asset/651ca92d-a65b-4fe1-a937-cc7a2fc22c6d'
-const imgIconUser       = 'https://www.figma.com/api/mcp/asset/e5a48776-d5b0-4857-8443-c1228d32e051' // imgGroup178 — person icon (Nombre)
-const imgIconEmail      = 'https://www.figma.com/api/mcp/asset/1b8fcb11-bae8-4c96-b7dc-87a8ba5f1173' // imgIcon — email icon (Correo)
-const imgLogoSmall      = 'https://www.figma.com/api/mcp/asset/6ff92953-8e64-48a2-b6a3-559baab1fdd3' // imgGroup1000005785 — top-left nav icons
-const imgBrandMark      = 'https://www.figma.com/api/mcp/asset/a8a8d6ff-2000-4d61-9f5d-b8d64cf73b5e' // imgGroup — Mocion logo mark
-const imgBrandText      = 'https://www.figma.com/api/mcp/asset/43d88ed0-89c1-4b49-b4a0-3464a3c81286' // imgGroup1 — "Experience Tech"
+// Assets — Figma node 87:187
+const imgPolygon1    = 'https://www.figma.com/api/mcp/asset/e23efb98-ec29-4d7e-8cbc-1303721b8d26'
+const imgPolygon2    = 'https://www.figma.com/api/mcp/asset/965044ce-00ce-4e8e-8270-e618e2217d75'
+const imgLogoSmall   = 'https://www.figma.com/api/mcp/asset/7a42c040-8933-4e8b-ab12-b6cb666c4880' // Group1000005785
+const imgBrandMark   = 'https://www.figma.com/api/mcp/asset/96b1cf28-7d17-41a0-9618-d2ddc032533f' // Mocion
+const imgBrandText   = 'https://www.figma.com/api/mcp/asset/5790c5f8-80e4-4365-b7ca-614b522857b1' // Experience Tech
+const imgIconNombre  = 'https://www.figma.com/api/mcp/asset/6b9bf5a2-e38d-4127-a9cc-e625f30a9b7f' // Vector — person
+const imgIconEmpresa = 'https://www.figma.com/api/mcp/asset/b2a499b7-8bb3-4dfa-9bd7-df04e81b5217' // Group214 — building
+const imgIconCorreo  = 'https://www.figma.com/api/mcp/asset/50e9e584-2235-4619-ba9e-572aaea712fa' // Union — phone
+const imgIconCelular = 'https://www.figma.com/api/mcp/asset/2e107bec-2b16-4b17-8a43-f69f8640fd25' // Union1 — mail
+const imgDot         = 'https://www.figma.com/api/mcp/asset/f47e5847-aa4f-46e8-8f83-9de2e9b8599c' // Ellipse7
+
+const inputStyle: CSSProperties = {
+  position: 'absolute', left: '143px', top: 0, width: 'calc(100% - 143px)', height: '100%',
+  background: 'transparent', border: 'none', outline: 'none',
+  fontFamily: '"Roboto", sans-serif', fontWeight: 400, fontSize: '50px',
+  color: '#1e1e1e', caretColor: '#1e1e1e',
+}
+const placeholderStyle: CSSProperties = {
+  position: 'absolute', left: '143px', top: '50%', transform: 'translateY(-50%)',
+  fontFamily: '"Roboto", sans-serif', fontWeight: 400, fontSize: '50px',
+  color: 'rgba(35,46,46,0.4)', pointerEvents: 'none',
+}
 
 export default function Registro() {
   const navigate = useNavigate()
-  const [nombre, setNombre] = useState('')
-  const [correo, setCorreo] = useState('')
+  const [nombre, setNombre]   = useState('')
+  const [empresa, setEmpresa] = useState('')
+  const [correo, setCorreo]   = useState('')
+  const [celular, setCelular] = useState('')
 
   return (
-    <div style={{ position: 'relative', width: '1080px', height: '1920px', background: '#efefef', overflow: 'hidden' }}>
+    <div style={{ position: 'relative', width: '1080px', height: '1920px', background: '#82ea6f', overflow: 'hidden' }}>
 
-      {/* Background watermark — top-left */}
-      <img alt="" src={imgImage10} style={{ position: 'absolute', left: '-32px', top: '-35px', width: '526px', height: '525px', objectFit: 'cover', opacity: 0.1, pointerEvents: 'none' }} />
+      {/* Polygon 1 */}
+      <div style={{ position: 'absolute', left: '-783px', top: '-92px', width: '1859px', height: '1859px', display: 'flex', alignItems: 'center', justifyContent: 'center', pointerEvents: 'none' }}>
+        <div style={{ transform: 'rotate(23.2deg)', flexShrink: 0 }}>
+          <div style={{ position: 'relative', width: '1416px', height: '1416px' }}>
+            <img alt="" src={imgPolygon1} style={{ position: 'absolute', top: 0, left: '34.7px', width: '1347px', height: '1281px', display: 'block' }} />
+          </div>
+        </div>
+      </div>
 
-      {/* Background watermark — bottom-right */}
-      <img alt="" src={imgImage9} style={{ position: 'absolute', left: '588px', top: '1372px', width: '722px', height: '724px', objectFit: 'cover', opacity: 0.08, pointerEvents: 'none' }} />
+      {/* Polygon 2 */}
+      <div style={{ position: 'absolute', left: '-155px', top: '-135px', width: '2107px', height: '2107px', display: 'flex', alignItems: 'center', justifyContent: 'center', pointerEvents: 'none' }}>
+        <div style={{ transform: 'rotate(23.2deg)', flexShrink: 0 }}>
+          <div style={{ position: 'relative', width: '1604px', height: '1604px' }}>
+            <img alt="" src={imgPolygon2} style={{ position: 'absolute', top: 0, left: '39.3px', width: '1525px', height: '1451px', display: 'block' }} />
+          </div>
+        </div>
+      </div>
 
-      {/* Small nav/brand icons — top-left  (calc: 540-417.5-73.5=49px) */}
-      <img alt="" src={imgLogoSmall} style={{ position: 'absolute', left: '49px', top: '94px', width: '147px', height: '43px', display: 'block' }} />
+      {/* Nav logo — top-left */}
+      <img alt="" src={imgLogoSmall} style={{ position: 'absolute', left: '98px', top: '95px', width: '147px', height: '43px', display: 'block' }} />
 
-      {/* Mocion brand mark — centered (inset 14.06%/20.28%/78.63%/20.28% → 219,270 642×140) */}
-      <img alt="" src={imgBrandMark} style={{ position: 'absolute', left: '219px', top: '270px', width: '642px', height: '140px', display: 'block' }} />
+      {/* Mocion brand mark */}
+      <img alt="" src={imgBrandMark} style={{ position: 'absolute', left: '219px', top: '397px', width: '642px', height: '119px', display: 'block' }} />
 
-      {/* "Experience Tech" text — centered (inset 22.53%/20.28%/73.6%/20.28% → 219,433 642×74) */}
-      <img alt="" src={imgBrandText} style={{ position: 'absolute', left: '219px', top: '433px', width: '642px', height: '74px', display: 'block' }} />
+      {/* Experience Tech */}
+      <img alt="" src={imgBrandText} style={{ position: 'absolute', left: '219px', top: '535px', width: '642px', height: '63px', display: 'block' }} />
 
-      {/* REGISTRO title (center 540,759 → left=99, top=720, w=882, h=78) */}
+      {/* REGISTRO title */}
       <div style={{
-        position: 'absolute', left: '99px', top: '720px', width: '882px', height: '78px',
+        position: 'absolute', left: '99px', top: '719px', width: '882px', height: '78px',
         display: 'flex', alignItems: 'center', justifyContent: 'center',
-        fontFamily: '"Nunito", sans-serif', fontWeight: 800, fontSize: '97px', lineHeight: 'normal',
-        color: '#ff006a', fontStyle: 'normal',
+        fontFamily: '"Bungee", sans-serif', fontSize: '97px', lineHeight: 'normal',
+        color: '#232e2e', textAlign: 'center',
       }}>
         REGISTRO
       </div>
 
-      {/* ── Nombre input ── (left=99, top=882, w=882, h=99) */}
-      <div style={{
-        position: 'absolute', left: '99px', top: '882px', width: '882px', height: '99px',
-        background: 'rgba(255,255,255,0.15)', border: '1.5px solid #1e1e1e',
-        borderRadius: '24px', boxSizing: 'border-box', overflow: 'hidden',
-        display: 'flex', alignItems: 'center',
-      }}>
-        {/* Person icon (absolute on canvas: left=159, top=912 → relative: 159-99=60, 912-882=30, w=26, h=38) */}
-        <img alt="" src={imgIconUser} style={{ position: 'absolute', left: '60px', top: '30px', width: '26px', height: '38px', display: 'block' }} />
-        <input
-          type="text"
-          placeholder="Tu nombre"
-          value={nombre}
-          onChange={(e) => setNombre(e.target.value)}
-          style={{
-            position: 'absolute', left: '120px', top: '0', width: 'calc(100% - 120px)', height: '100%',
-            background: 'transparent', border: 'none', outline: 'none',
-            fontFamily: '"Inter", sans-serif', fontWeight: 400, fontSize: '40px',
-            color: '#1e1e1e', caretColor: '#1e1e1e',
-          }}
-        />
-        <span style={{
-          position: 'absolute', left: '120px', top: '50%', transform: 'translateY(-50%)',
-          fontFamily: '"Inter", sans-serif', fontWeight: 400, fontSize: '40px',
-          color: 'rgba(30,30,30,0.6)', pointerEvents: 'none',
-          display: nombre ? 'none' : 'block',
-        }}>
-          Nombre
-        </span>
+      {/* ── Input: Tu nombre ── top=881 */}
+      <div style={{ position: 'absolute', left: '98px', top: '881px', width: '882px', height: '99px', background: 'rgba(255,255,255,0.15)', border: '1.5px solid #1e1e1e', borderRadius: '24px', boxSizing: 'border-box', overflow: 'hidden' }}>
+        <input type="text" value={nombre} onChange={e => setNombre(e.target.value)} style={inputStyle} />
+        {!nombre && <span style={placeholderStyle}>Tu nombre</span>}
       </div>
+      <img alt="" src={imgIconNombre}  style={{ position: 'absolute', left: '135px', top: '904px',  width: '52px', height: '52px', display: 'block', pointerEvents: 'none' }} />
+      <img alt="" src={imgDot}         style={{ position: 'absolute', left: '213px', top: '930px',  width: '12px', height: '12px', display: 'block', pointerEvents: 'none' }} />
 
-      {/* ── Correo input ── (left=99, top=1030, w=882, h=99) */}
-      <div style={{
-        position: 'absolute', left: '99px', top: '1030px', width: '882px', height: '99px',
-        background: 'rgba(255,255,255,0.15)', border: '1.5px solid #1e1e1e',
-        borderRadius: '24px', boxSizing: 'border-box', overflow: 'hidden',
-        display: 'flex', alignItems: 'center',
-      }}>
-        {/* Email icon (absolute: left=147, top=1060 → relative: 147-99=48, 1060-1030=30, w=50, h=38) */}
-        <img alt="" src={imgIconEmail} style={{ position: 'absolute', left: '48px', top: '30px', width: '50px', height: '38px', display: 'block' }} />
-        <input
-          type="email"
-          placeholder="Tu correo"
-          value={correo}
-          onChange={(e) => setCorreo(e.target.value)}
-          style={{
-            position: 'absolute', left: '120px', top: '0', width: 'calc(100% - 120px)', height: '100%',
-            background: 'transparent', border: 'none', outline: 'none',
-            fontFamily: '"Inter", sans-serif', fontWeight: 400, fontSize: '40px',
-            color: '#1e1e1e', caretColor: '#1e1e1e',
-          }}
-        />
-        <span style={{
-          position: 'absolute', left: '120px', top: '50%', transform: 'translateY(-50%)',
-          fontFamily: '"Inter", sans-serif', fontWeight: 400, fontSize: '40px',
-          color: 'rgba(30,30,30,0.6)', pointerEvents: 'none',
-          display: correo ? 'none' : 'block',
-        }}>
-          Correo
-        </span>
+      {/* ── Input: Tu empresa ── top=1013 */}
+      <div style={{ position: 'absolute', left: '98px', top: '1013px', width: '882px', height: '99px', background: 'rgba(255,255,255,0.15)', border: '1.5px solid #1e1e1e', borderRadius: '24px', boxSizing: 'border-box', overflow: 'hidden' }}>
+        <input type="text" value={empresa} onChange={e => setEmpresa(e.target.value)} style={inputStyle} />
+        {!empresa && <span style={placeholderStyle}>Tu empresa</span>}
       </div>
+      <img alt="" src={imgIconEmpresa} style={{ position: 'absolute', left: '138px', top: '1032px', width: '54px', height: '63px', display: 'block', pointerEvents: 'none' }} />
+      <img alt="" src={imgDot}         style={{ position: 'absolute', left: '213px', top: '1058px', width: '12px', height: '12px', display: 'block', pointerEvents: 'none' }} />
 
-      {/* Comenzar button (center 540, left=198, top=1421, w=684, h=133) */}
+      {/* ── Input: Tu correo ── top=1145 */}
+      <div style={{ position: 'absolute', left: '98px', top: '1145px', width: '882px', height: '99px', background: 'rgba(255,255,255,0.15)', border: '1.5px solid #1e1e1e', borderRadius: '24px', boxSizing: 'border-box', overflow: 'hidden' }}>
+        <input type="email" value={correo} onChange={e => setCorreo(e.target.value)} style={inputStyle} />
+        {!correo && <span style={placeholderStyle}>Tu correo</span>}
+      </div>
+      <img alt="" src={imgIconCorreo}  style={{ position: 'absolute', left: '135px', top: '1156px', width: '47px', height: '78px', display: 'block', pointerEvents: 'none' }} />
+      <img alt="" src={imgDot}         style={{ position: 'absolute', left: '213px', top: '1191px', width: '12px', height: '12px', display: 'block', pointerEvents: 'none' }} />
+
+      {/* ── Input: Tu celular ── top=1277 */}
+      <div style={{ position: 'absolute', left: '98px', top: '1277px', width: '882px', height: '99px', background: 'rgba(255,255,255,0.15)', border: '1.5px solid #1e1e1e', borderRadius: '24px', boxSizing: 'border-box', overflow: 'hidden' }}>
+        <input type="tel" value={celular} onChange={e => setCelular(e.target.value)} style={inputStyle} />
+        {!celular && <span style={placeholderStyle}>Tu celular</span>}
+      </div>
+      <img alt="" src={imgIconCelular} style={{ position: 'absolute', left: '131px', top: '1305px', width: '61px', height: '48px', display: 'block', pointerEvents: 'none' }} />
+      <img alt="" src={imgDot}         style={{ position: 'absolute', left: '213px', top: '1323px', width: '12px', height: '12px', display: 'block', pointerEvents: 'none' }} />
+
+      {/* Comenzar button — center, top=1565 */}
       <button
         onClick={() => navigate('/instrucciones')}
         style={{
-          position: 'absolute', left: '198px', top: '1421px', width: '684px', height: '133px',
-          background: '#333', borderRadius: '66.5px', border: 'none', cursor: 'pointer',
+          position: 'absolute', left: '198px', top: '1565px', width: '684px', height: '133px',
+          background: '#232e2e', borderRadius: '66.5px', border: 'none', cursor: 'pointer',
           display: 'flex', alignItems: 'center', justifyContent: 'center',
         }}
       >

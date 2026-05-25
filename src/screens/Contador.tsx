@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-// Assets — Figma node 1:465
-const imgBg         = 'https://www.figma.com/api/mcp/asset/170f1f99-4827-4aae-bead-80e27937c138' // imgImage11 — camera bg
-const imgBgOverlay  = 'https://www.figma.com/api/mcp/asset/f3b30da9-665f-44bc-9a6b-63c0d2bbcaba' // imgBgHeroMail31 — color bg overlay
-const imgLogoSmall  = 'https://www.figma.com/api/mcp/asset/46d3117c-977c-4843-9354-40bbbee44a9d' // imgGroup1000005785 — top-left logo
-const imgNavIcons   = 'https://www.figma.com/api/mcp/asset/f00cdbe2-a666-4b96-986c-22a824f4607b' // imgGroup — nav icons top area
+// Assets — Figma node 87:28
+const imgExclude      = 'https://www.figma.com/api/mcp/asset/8cc720b6-e892-4206-9c7a-e31fba36c12d' // green frame
+const imgMaskGroup    = 'https://www.figma.com/api/mcp/asset/169b7338-b6f7-4b9a-b76a-bebc0dc7166b' // polygon overlay
+const imgBalon1       = 'https://www.figma.com/api/mcp/asset/38068260-2d33-484e-b0b9-9f4b82dca614' // soccer ball
+const imgBtnRepetir   = 'https://www.figma.com/api/mcp/asset/41347e02-5da6-4d34-bcf5-1a27150af11d' // Group208 circle
+const imgBtnSiguiente = 'https://www.figma.com/api/mcp/asset/e08aea04-9349-404f-be12-3e6d95a0d996' // Group192 circle
+const imgLogo         = 'https://www.figma.com/api/mcp/asset/add251d0-cbcf-48f7-97a0-cb0d0f09e5db' // Mocion logo
 
 export default function Contador() {
   const navigate = useNavigate()
@@ -21,50 +23,25 @@ export default function Contador() {
   }, [count, navigate])
 
   return (
-    <div style={{ position: 'relative', width: '1080px', height: '1920px', background: '#1a1a2e', overflow: 'hidden' }}>
+    <div style={{ position: 'relative', width: '1080px', height: '1920px', background: '#000', overflow: 'hidden' }}>
 
-      {/* Camera background — full bleed (centered: left=50%-31px-50%*2712=-306, top=50%+1px-50%*1836=-917) */}
-      <img alt="" src={imgBg} style={{
-        position: 'absolute',
-        left: '50%', top: '50%',
-        transform: 'translate(-50%, -50%)',
-        width: '2712px', height: '1836px',
-        objectFit: 'cover', pointerEvents: 'none',
-      }} />
+      {/* Green frame overlay (Exclude shape) */}
+      <img alt="" src={imgExclude} style={{ position: 'absolute', left: 0, top: 0, width: '1080px', height: '1920px', display: 'block', pointerEvents: 'none' }} />
 
-      {/* Color gradient overlay */}
-      <img alt="" src={imgBgOverlay} style={{
-        position: 'absolute', left: 0, top: 0, width: '100%', height: '100%',
-        objectFit: 'cover', opacity: 0.57, pointerEvents: 'none',
-      }} />
+      {/* Polygon corner decoration overlay */}
+      <img alt="" src={imgMaskGroup} style={{ position: 'absolute', left: 0, top: 0, width: '1080px', height: '1920px', display: 'block', pointerEvents: 'none' }} />
 
-      {/* Dark vignette overlay */}
-      <div style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.3)', pointerEvents: 'none' }} />
+      {/* Soccer ball — bottom-right */}
+      <img alt="" src={imgBalon1} style={{ position: 'absolute', left: '707px', top: '1516px', width: '339px', height: '338px', objectFit: 'cover', pointerEvents: 'none' }} />
 
-      {/* Rounded phone frame */}
-      <div style={{
-        position: 'absolute', left: '75px', top: '90px',
-        width: '930px', height: '1740px',
-        borderRadius: '48px',
-        border: '4px solid rgba(255,255,255,0.25)',
-        overflow: 'hidden', boxSizing: 'border-box',
-        pointerEvents: 'none',
-      }}>
-        <img alt="" src={imgBg} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
-        <div style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.25)' }} />
-      </div>
+      {/* Mocion logo — top center */}
+      <img alt="" src={imgLogo} style={{ position: 'absolute', left: '348px', top: '33px', width: '384px', height: '84px', display: 'block' }} />
 
-      {/* Nav icons top-left (inset 1.88%/32.02%/93.71%/32.04% → left=346, top=36, w=388, h=84) */}
-      <img alt="" src={imgNavIcons} style={{ position: 'absolute', left: '346px', top: '36px', width: '388px', height: '84px', display: 'block' }} />
-
-      {/* Small logo top-left (left≈49px, top=56) */}
-      <img alt="" src={imgLogoSmall} style={{ position: 'absolute', left: '49px', top: '56px', width: '147px', height: '43px', display: 'block' }} />
-
-      {/* Countdown number (center 540.5, 930 → left=100, top=555, w=881, h=750) */}
+      {/* Countdown number */}
       <div style={{
         position: 'absolute', left: '100px', top: '555px', width: '881px', height: '750px',
         display: 'flex', alignItems: 'center', justifyContent: 'center',
-        fontFamily: '"Nunito", sans-serif', fontWeight: 800, fontSize: '700px', lineHeight: 1,
+        fontFamily: '"Bungee", sans-serif', fontSize: '700px', lineHeight: 1,
         color: 'rgba(255,255,255,0.84)',
         textShadow: '0px 4px 60px rgba(0,0,0,0.5)',
         pointerEvents: 'none',
@@ -72,16 +49,27 @@ export default function Contador() {
         {count > 0 ? count : ''}
       </div>
 
-      {/* Bottom icons */}
-      <div style={{
-        position: 'absolute', bottom: '80px', left: 0, right: 0,
-        display: 'flex', justifyContent: 'center', gap: '40px',
-        fontSize: '80px',
-      }}>
-        <span>😊</span>
-        <span style={{ color: '#ff4444', fontSize: '72px' }}>●</span>
-        <span>⚽</span>
-      </div>
+      {/* Repetir button */}
+      <button
+        onClick={() => setCount(3)}
+        style={{ position: 'absolute', left: '148px', top: '1535px', width: '136px', height: '136px', padding: 0, border: 'none', background: 'transparent', cursor: 'pointer' }}
+      >
+        <img alt="Repetir" src={imgBtnRepetir} style={{ width: '100%', height: '100%', display: 'block' }} />
+      </button>
+      <span style={{ position: 'absolute', left: '152px', top: '1679px', width: '132px', height: '26px', textAlign: 'center', fontFamily: '"Roboto", sans-serif', fontWeight: 600, fontSize: '25px', color: '#fff', pointerEvents: 'none', display: 'block' }}>
+        Repetir
+      </span>
+
+      {/* Siguiente button */}
+      <button
+        onClick={() => navigate('/loader')}
+        style={{ position: 'absolute', left: '324px', top: '1535px', width: '136px', height: '136px', padding: 0, border: 'none', background: 'transparent', cursor: 'pointer' }}
+      >
+        <img alt="Siguiente" src={imgBtnSiguiente} style={{ width: '100%', height: '100%', display: 'block' }} />
+      </button>
+      <span style={{ position: 'absolute', left: '325px', top: '1679px', width: '136px', height: '26px', textAlign: 'center', fontFamily: '"Roboto", sans-serif', fontWeight: 600, fontSize: '25px', color: '#f16623', pointerEvents: 'none', display: 'block' }}>
+        Siguiente
+      </span>
     </div>
   )
 }
