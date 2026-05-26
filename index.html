@@ -517,6 +517,46 @@
       height: 6.95%
     }
 
+    .register-terms {
+      position: absolute;
+      left: 50%;
+      top: 75.1%;
+      width: 76%;
+      transform: translateX(-50%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+      z-index: 7;
+      color: #223033;
+      font: 500 clamp(15px, 1.65vw, 20px) 'Outfit', sans-serif
+    }
+
+    .register-terms input {
+      width: 24px;
+      height: 24px;
+      margin: 0;
+      accent-color: #223033;
+      cursor: pointer;
+      flex: 0 0 auto
+    }
+
+    .register-terms label {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      cursor: pointer;
+      line-height: 1.2;
+      text-align: center
+    }
+
+    .register-terms a {
+      color: inherit;
+      text-decoration: underline;
+      text-underline-offset: 2px
+    }
+
     .bg-submit {
       display: none
     }
@@ -616,7 +656,7 @@
     }
 
     .screen-intro > :not(.screen-hit),
-    .screen-register > :not(.art-input):not(.screen-hit),
+    .screen-register > :not(.art-input):not(.screen-hit):not(.register-terms),
     .screen-guide > :not(.screen-hit),
     .screen-color > :not(.screen-hit):not(.color-picker-wrap) {
       display: none !important
@@ -1181,6 +1221,12 @@
           <input class="art-input art-company" id="companyIn" type="text" maxlength="80" placeholder="Tu empresa" autocomplete="off" autocorrect="off" spellcheck="false" autocapitalize="words" enterkeyhint="next" aria-label="Tu empresa" />
           <input class="art-input art-email" id="phoneIn" type="tel" maxlength="15" placeholder="Tu celular" autocomplete="off" autocorrect="off" spellcheck="false" autocapitalize="off" inputmode="numeric" pattern="[0-9]*" enterkeyhint="next" aria-label="Tu celular" />
           <input class="art-input art-phone" id="emailIn" type="email" maxlength="80" placeholder="Tu correo" autocomplete="off" autocorrect="off" spellcheck="false" autocapitalize="off" inputmode="email" enterkeyhint="done" aria-label="Tu correo" />
+          <div class="register-terms">
+            <label for="termsIn">
+              <input id="termsIn" type="checkbox" aria-label="Acepto términos y condiciones" />
+              <span>Acepto <a href="https://app.evius.co/terms" target="_blank" rel="noopener noreferrer">términos y condiciones</a></span>
+            </label>
+          </div>
           <button class="screen-hit register-submit" type="button" onclick="startExperience()" aria-label="Comenzar"></button>
         <p>Selecciona tu color de fondo y prepárate para tomarte una foto en pixel art.</p>
         <div class="field register-field">
@@ -2323,7 +2369,10 @@
     }
 
     function getRegisterField(id) {
-      return document.querySelector(`#sc0 .screen-register > [id="${id}"]`);
+      return document.querySelector(`#sc0 .screen-register > [id="${id}"]`) || document.querySelector(`#sc0 #${id}`);
+    }
+    function getTermsCheckbox() {
+      return document.querySelector("#sc0 #termsIn");
     }
     function normalizeRegisterText(value) {
       return value.trim().replace(/\s+/g, " ");
@@ -2350,7 +2399,8 @@
         name: normalizeRegisterText(getRegisterField("nameIn").value),
         company: normalizeRegisterText(getRegisterField("companyIn").value),
         email: normalizeRegisterText(getRegisterField("emailIn").value).toLowerCase(),
-        phone: normalizeRegisterPhone(getRegisterField("phoneIn").value)
+        phone: normalizeRegisterPhone(getRegisterField("phoneIn").value),
+        termsAccepted: Boolean(getTermsCheckbox()?.checked)
       };
     }
     function validateRegisterData(data) {
@@ -2364,6 +2414,9 @@
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) {
         return { fieldId: "emailIn", message: "Escribe un correo valido" };
       }
+      if (!data.termsAccepted) {
+        return { fieldId: "termsIn", message: "Debes aceptar términos y condiciones para continuar" };
+      }
       return null;
     }
     function clearRegisterForm() {
@@ -2373,6 +2426,8 @@
         input.value = "";
         input.classList.remove("is-active", "has-value");
       });
+      const termsCheckbox = getTermsCheckbox();
+      if (termsCheckbox) termsCheckbox.checked = false;
     }
     function bindRegisterForm() {
       REGISTER_FIELDS.forEach((field, index) => {
@@ -2410,6 +2465,13 @@
 
         syncRegisterFieldState(input);
       });
+
+      const termsCheckbox = getTermsCheckbox();
+      if (termsCheckbox) {
+        termsCheckbox.addEventListener("change", () => {
+          hErr();
+        });
+      }
     }
     function goToRegister() {
       hErr();
