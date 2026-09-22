@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no" />
-  <title>FIFA 2026 - Promologistics</title>
+  <title>Hacienda La Julieta - Photobooth</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Outfit:wght@300;400;600;700;800&display=swap');
 
@@ -176,11 +176,11 @@
     }
 
     .screen-intro {
-      background-image: url("/layers/in.png")
+      background-image: url("/figma/screen-inicio.png")
     }
 
     .screen-register {
-      background-image: url("/layers/regis.png")
+      background-image: url("/figma/screen-registro.png")
     }
 
     .screen-guide {
@@ -188,12 +188,12 @@
     }
 
     .screen-color {
-      background-image: url("/layers/SELECCI%C3%93N%20FONDOO.png")
+      background-image: url("/figma/screen-seleccion-fondo.png")
     }
 
     .screen-camera,
     .camera-panel {
-      background: #000 !important
+      background: #f1ece2 url("/figma/textura-guide.png") center/cover no-repeat !important
     }
 
     .camera-panel {
@@ -230,21 +230,81 @@
       position: relative;
       width: min(calc(100vw - 24px), calc((100vh - 32px) * 9 / 16));
       height: min(calc(100vh - 32px), calc((100vw - 24px) * 16 / 9));
-      background: url("/layers/gracias.png") center/cover no-repeat
+      background: #f1ece2 url("/figma/textura-guide.png") center/cover no-repeat
+    }
+
+    .thanks-logo {
+      position: absolute;
+      left: 30.56%;
+      top: 7.08%;
+      width: 38.8%;
+      height: 21.04%;
+      object-fit: contain
+    }
+
+    .thanks-title {
+      position: absolute;
+      left: 11.48%;
+      top: 34.9%;
+      width: 77.13%;
+      margin: 0;
+      font: 400 clamp(28px, 12.59vw, 136px)/1.15 'Borisna', 'Outfit', serif;
+      color: #544842;
+      text-align: center
+    }
+
+    .thanks-subtitle {
+      position: absolute;
+      left: 19.81%;
+      top: 48.96%;
+      width: 60.37%;
+      margin: 0;
+      font: 300 clamp(16px, 4.51vw, 48.75px)/1.3 'Outfit', sans-serif;
+      color: #151515;
+      text-align: center
+    }
+
+    .thanks-subtitle strong {
+      font-weight: 600
     }
 
     .thanks-finish {
-      left: 10%;
-      top: 81%;
-      width: 80%;
-      height: 7%
+      left: 17.69%;
+      top: 84.64%;
+      width: 63.33%;
+      height: 6.93%
+    }
+
+    .thanks-finish-bg {
+      position: absolute;
+      left: 17.69%;
+      top: 84.64%;
+      width: 63.33%;
+      height: 6.93%;
+      background: #544842;
+      border-radius: 6px;
+      pointer-events: none
+    }
+
+    .thanks-finish-label {
+      position: absolute;
+      left: 17.69%;
+      top: 84.64%;
+      width: 63.33%;
+      height: 6.93%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font: 800 clamp(20px, 6.02vw, 65px) 'Outfit', sans-serif;
+      color: #fff;
+      pointer-events: none
     }
 
     .thanks-qr-wrap {
       position: absolute;
-      left: 34%;
-      top: 58%;
-      width: 32%;
+      left: 33.8%;
+      top: 61.3%;
+      width: 32.41%;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -323,7 +383,16 @@
       width: min(calc(100vw - 24px), calc((100vh - 32px) * 9 / 16));
       height: min(calc(100vh - 32px), calc((100vw - 24px) * 16 / 9));
       overflow: hidden;
-      background: #000 url("/layers/LOADER.png") center/100% 100% no-repeat
+      background: #f1ece2 url("/figma/textura-guide.png") center/cover no-repeat
+    }
+
+    .processing-logo {
+      position: absolute;
+      left: 35.65%;
+      top: 12.99%;
+      width: 28.7%;
+      height: 15.57%;
+      object-fit: contain
     }
 
     .processing-preview {
@@ -349,17 +418,22 @@
       position: relative;
       width: min(calc(100vw - 24px), calc((100vh - 32px) * 9 / 16));
       height: min(calc(100vh - 32px), calc((100vw - 24px) * 16 / 9));
-      background: #000;
+      background: #f1ece2 url("/figma/textura-guide.png") center/cover no-repeat;
       overflow: hidden
     }
 
     .result-poster {
       position: absolute;
-      inset: 0;
+      left: 7.78%;
+      top: 7.81%;
+      width: 84.44%;
+      height: 84.38%;
       display: flex;
       align-items: center;
       justify-content: center;
       background: #000;
+      border: .93vw solid #544842;
+      box-sizing: border-box;
       overflow: hidden;
       z-index: 1
     }
@@ -374,39 +448,35 @@
     }
 
     .result-repeat-hit {
-      left: 11%;
-      top: 82%;
-      width: 18%;
-      height: 9%
+      left: 7.78%;
+      top: 7.81%;
+      width: 20%;
+      height: 12%
     }
 
-    .result-next-hit {
-      left: 29.5%;
-      top: 82%;
-      width: 38%;
-      height: 9%
-    }
-
-    .result-actions {
-      width: 100%;
-      display: grid;
-      gap: 10px
-    }
-
-    .result-actions .btn {
-      font-family: 'Outfit', sans-serif;
-      font-size: 18px;
-      font-weight: 800;
-      letter-spacing: .02em;
+    .result-continue {
+      position: absolute;
+      left: 10.46%;
+      top: 84.2%;
+      width: 79.17%;
+      height: 6.93%;
+      z-index: 2;
+      border: 0;
+      border-radius: 6px;
+      background: rgba(84, 72, 66, .94);
       color: #fff;
-      text-shadow: none
+      font: 800 clamp(20px, 6.02vw, 65px) 'Outfit', sans-serif;
+      cursor: pointer;
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent
     }
 
     .screen-camera video {
       position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
+      left: 7.78%;
+      top: 7.81%;
+      width: 84.44%;
+      height: 84.38%;
       object-fit: cover;
       background: #000;
       display: block;
@@ -439,11 +509,52 @@
       pointer-events: none
     }
 
+    .camera-frame-border {
+      position: absolute;
+      left: 7.78%;
+      top: 7.81%;
+      width: 84.44%;
+      height: 84.38%;
+      border: .93vw solid #544842;
+      box-sizing: border-box;
+      pointer-events: none;
+      z-index: 5
+    }
+
+    .camera-action {
+      position: absolute;
+      width: 12.62%;
+      height: 7.1%;
+      top: 79.95%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 6px;
+      background: transparent;
+      border: 0;
+      cursor: pointer;
+      z-index: 8;
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent
+    }
+
+    .camera-action img {
+      width: 100%;
+      height: auto;
+      display: block
+    }
+
+    .camera-action span {
+      font: 600 clamp(12px, 2.31vw, 25px) 'Outfit', sans-serif
+    }
+
     .camera-repeat {
-      left: 11%;
-      top: 82%;
-      width: 18%;
-      height: 9%
+      left: 13.7%
+    }
+
+    .camera-repeat span {
+      color: #fff
     }
 
     .camera-capture {
@@ -451,7 +562,11 @@
     }
 
     .camera-upload {
-      display: none
+      left: 30%
+    }
+
+    .camera-upload span {
+      color: #f16623
     }
 
     .camera-auto-copy {
@@ -497,28 +612,31 @@
     }
 
     .intro-start {
-      left: 9.2%;
-      top: 82.35%;
-      width: 81.7%;
-      height: 6.95%
+      left: 9.17%;
+      top: 78.49%;
+      width: 81.67%;
+      height: 6.93%
     }
 
     .guide-next {
-      left: 10.45%;
-      top: 75.85%;
-      width: 79.2%;
-      height: 6.95%
+      left: 10.46%;
+      top: 81.51%;
+      width: 79.17%;
+      height: 6.93%
     }
 
     .register-submit {
-      left: 18.3%;
-      top: 81.5%;
-      width: 63.4%;
-      height: 6.95%
+      left: 18.33%;
+      top: 81.51%;
+      width: 63.33%;
+      height: 6.93%
     }
 
     .bg-submit {
-      display: none
+      left: 10.42%;
+      top: 81.46%;
+      width: 79.17%;
+      height: 6.93%
     }
 
     .color-actions {
@@ -527,18 +645,18 @@
 
     .art-input {
       position: absolute;
-      left: 17.85%;
-      width: 69.5%;
-      height: 4.35%;
-      border: 0;
-      border-radius: 18px;
-      background: #e9ede7 !important;
-      color: #223033;
-      font: 400 clamp(16px, 1.55vw, 20px) 'Outfit', sans-serif;
+      left: 9.07%;
+      width: 81.67%;
+      height: 5.16%;
+      border: 1.5px solid #151515;
+      border-radius: 24px;
+      background: #f1ece2 !important;
+      color: #151515;
+      font: 400 clamp(16px, 1.85vw, 24px) 'Outfit', sans-serif;
       letter-spacing: -.01em;
-      padding: 0 6px;
+      padding: 0 6px 0 16.5%;
       outline: none;
-      caret-color: #223033;
+      caret-color: #151515;
       text-shadow: none;
       z-index: 4;
       touch-action: manipulation;
@@ -546,26 +664,29 @@
       appearance: none;
       line-height: 1;
       box-shadow: none !important;
-      transition: none
+      transition: none;
+      background-repeat: no-repeat !important;
+      background-position: 5.5% center !important;
+      background-size: 7% auto !important
     }
 
     .art-input::placeholder {
-      color: #a1a8a4;
+      color: #7a726a;
       opacity: 1
     }
 
     .art-input:-webkit-autofill,
     .art-input:-webkit-autofill:hover,
     .art-input:-webkit-autofill:focus {
-      -webkit-text-fill-color: #223033;
-      -webkit-box-shadow: 0 0 0 1000px #e9ede7 inset !important;
-      background-color: #e9ede7 !important;
+      -webkit-text-fill-color: #151515;
+      -webkit-box-shadow: 0 0 0 1000px #f1ece2 inset !important;
+      background-color: #f1ece2 !important;
       transition: background-color 9999s ease-out 0s
     }
 
     .art-input.is-active,
     .art-input.has-value {
-      background: #e9ede7 !important;
+      background-color: #f1ece2 !important;
       box-shadow: none !important
     }
 
@@ -574,19 +695,23 @@
     }
 
     .art-name {
-      top: 46.35%
+      top: 45.89%;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23544842' stroke-width='2'%3E%3Ccircle cx='12' cy='8' r='4'/%3E%3Cpath d='M4 20c0-4.4 3.6-8 8-8s8 3.6 8 8'/%3E%3C/svg%3E") !important
     }
 
     .art-company {
-      top: 53.22%
+      top: 52.76%;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23544842' stroke-width='2'%3E%3Crect x='4' y='3' width='10' height='18'/%3E%3Cpath d='M14 8h6v13h-6'/%3E%3Cpath d='M7 7h1M7 11h1M7 15h1M10 7h1M10 11h1M10 15h1'/%3E%3C/svg%3E") !important
     }
 
     .art-email {
-      top: 60.1%
+      top: 59.64%;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23544842' stroke-width='2'%3E%3Crect x='3' y='5' width='18' height='14' rx='2'/%3E%3Cpath d='M3 7l9 6 9-6'/%3E%3C/svg%3E") !important
     }
 
     .art-phone {
-      top: 66.98%
+      top: 66.51%;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23544842' stroke-width='2'%3E%3Cpath d='M6 3h3l1.5 5-2 1.5a12 12 0 0 0 6 6l1.5-2 5 1.5v3a2 2 0 0 1-2 2C11.5 20 4 12.5 4 5a2 2 0 0 1 2-2z'/%3E%3C/svg%3E") !important
     }
 
     .color-picker-wrap {
@@ -615,11 +740,121 @@
       box-shadow: 0 0 0 4px rgba(45, 45, 45, .9), 0 0 0 8px rgba(255, 255, 255, .32)
     }
 
+    .event-choice {
+      position: absolute;
+      left: 12.13%;
+      width: 76.02%;
+      height: 12.97%;
+      border: 0;
+      border-radius: 12px;
+      background: transparent;
+      cursor: pointer;
+      box-shadow: inset 0 0 0 0 transparent;
+      transition: box-shadow .15s ease
+    }
+
+    .event-choice:hover {
+      box-shadow: inset 0 0 0 3px rgba(255, 255, 255, .55)
+    }
+
+    .event-choice.a {
+      box-shadow: inset 0 0 0 4px #fff, inset 0 0 0 7px var(--gold)
+    }
+
+    .event-choice.ceremonia {
+      top: 33.33%
+    }
+
+    .event-choice.salon {
+      top: 48.18%
+    }
+
+    .event-choice.recepcion {
+      top: 63.02%
+    }
+
     .screen-intro > :not(.screen-hit),
     .screen-register > :not(.art-input):not(.screen-hit),
-    .screen-guide > :not(.screen-hit),
     .screen-color > :not(.screen-hit):not(.color-picker-wrap) {
       display: none !important
+    }
+
+    .screen-guide {
+      background-color: #f1ece2;
+      background-image: none
+    }
+
+    .guide-texture {
+      position: absolute;
+      inset: 0;
+      opacity: .7;
+      pointer-events: none;
+      background: url("/figma/textura-guide.png") center/cover no-repeat
+    }
+
+    .guide-logo {
+      position: absolute;
+      left: 30.56%;
+      top: 7.08%;
+      width: 38.8%;
+      height: 21.04%;
+      object-fit: contain
+    }
+
+    .guide-title {
+      position: absolute;
+      left: 10.28%;
+      top: 34.43%;
+      width: 79.35%;
+      margin: 0;
+      font: 400 clamp(28px, 9.72vw, 105px) 'Borisna', 'Outfit', serif;
+      color: #544842;
+      text-align: center;
+      line-height: 1
+    }
+
+    .guide-steps {
+      position: absolute;
+      left: 9.54%;
+      top: 44.22%;
+      width: 78.15%;
+      margin: 0;
+      padding-left: 5.5%;
+      font: 400 clamp(14px, 3.7vw, 40px)/1.25 'Outfit', sans-serif;
+      color: #151515
+    }
+
+    .guide-steps li {
+      margin-bottom: .6em
+    }
+
+    .guide-steps strong {
+      font-weight: 800
+    }
+
+    .guide-btn-bg {
+      position: absolute;
+      left: 10.46%;
+      top: 81.51%;
+      width: 79.17%;
+      height: 6.93%;
+      background: #544842;
+      border-radius: 6px;
+      pointer-events: none
+    }
+
+    .guide-btn-label {
+      position: absolute;
+      left: 10.46%;
+      top: 81.51%;
+      width: 79.17%;
+      height: 6.93%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font: 800 clamp(20px, 6.02vw, 65px) 'Outfit', sans-serif;
+      color: #fff;
+      pointer-events: none
     }
 
     body.welcome-mode .hdr,
@@ -850,19 +1085,22 @@
 
     .cdo {
       position: absolute;
-      inset: 0;
+      left: 7.78%;
+      top: 7.81%;
+      width: 84.44%;
+      height: 84.38%;
       display: flex;
       align-items: center;
       justify-content: center;
-      background: rgba(0, 0, 0, .6);
+      background: transparent;
       z-index: 10
     }
 
     .cdn {
-      font-family: 'Press Start 2P', monospace;
-      font-size: 100px;
-      color: #fff;
-      text-shadow: 4px 4px 0 #000, 0 0 40px var(--gold);
+      font-family: 'Outfit', sans-serif;
+      font-size: clamp(120px, 64.8vw, 700px);
+      color: rgba(255, 255, 255, .84);
+      text-shadow: 0 4px 60px rgba(0, 0, 0, .5);
       animation: cp .8s ease-out
     }
 
@@ -967,15 +1205,32 @@
 
     .sp {
       position: absolute;
-      left: 50%;
-      top: 41.5%;
-      width: 18%;
-      aspect-ratio: 1;
-      transform: translate(-50%, -50%);
-      background: url("/layers/loading%20(1).gif") center/contain no-repeat
+      left: 31.48%;
+      top: 27.08%;
+      width: 36.76%;
+      height: 20.68%;
+      background: url("/figma/icon-spinner.svg") center/contain no-repeat;
+      animation: spin 1.2s linear infinite
     }
 
-    .pt,
+    @keyframes spin {
+      to {
+        transform: rotate(360deg)
+      }
+    }
+
+    .pt {
+      display: block !important;
+      position: absolute;
+      left: 8.29%;
+      top: 65.29%;
+      width: 83.43%;
+      margin: 0;
+      font: 400 clamp(28px, 12.59vw, 136px)/1.15 'Borisna', 'Outfit', serif;
+      color: #544842;
+      text-align: center
+    }
+
     .ps {
       display: none !important
     }
@@ -1133,10 +1388,10 @@
   <div class="wrap">
     <div class="hdr">
       <div class="hdr-box">
-        <h1>MUNDIAL 2026</h1>
+        <h1>HACIENDA LA JULIETA</h1>
         <div class="br">PROMOLOGISTICS</div>
       </div>
-      <p class="sub">Tu foto en pixel art sobre el poster por capas</p>
+      <p class="sub">Tu foto en un escenario real de Hacienda La Julieta</p>
     </div>
     <div class="steps">
       <div class="step" id="s1"></div>
@@ -1179,10 +1434,10 @@
         <div class="screen-frame screen-register">
           <input class="art-input art-name" id="nameIn" type="text" maxlength="28" placeholder="Tu nombre" autocomplete="off" autocorrect="off" spellcheck="false" autocapitalize="words" enterkeyhint="next" aria-label="Tu nombre" />
           <input class="art-input art-company" id="companyIn" type="text" maxlength="80" placeholder="Tu empresa" autocomplete="off" autocorrect="off" spellcheck="false" autocapitalize="words" enterkeyhint="next" aria-label="Tu empresa" />
-          <input class="art-input art-email" id="phoneIn" type="tel" maxlength="15" placeholder="Tu celular" autocomplete="off" autocorrect="off" spellcheck="false" autocapitalize="off" inputmode="numeric" pattern="[0-9]*" enterkeyhint="next" aria-label="Tu celular" />
-          <input class="art-input art-phone" id="emailIn" type="email" maxlength="80" placeholder="Tu correo" autocomplete="off" autocorrect="off" spellcheck="false" autocapitalize="off" inputmode="email" enterkeyhint="done" aria-label="Tu correo" />
+          <input class="art-input art-email" id="emailIn" type="email" maxlength="80" placeholder="Tu correo" autocomplete="off" autocorrect="off" spellcheck="false" autocapitalize="off" inputmode="email" enterkeyhint="next" aria-label="Tu correo" />
+          <input class="art-input art-phone" id="phoneIn" type="tel" maxlength="15" placeholder="Tu celular" autocomplete="off" autocorrect="off" spellcheck="false" autocapitalize="off" inputmode="numeric" pattern="[0-9]*" enterkeyhint="done" aria-label="Tu celular" />
           <button class="screen-hit register-submit" type="button" onclick="startExperience()" aria-label="Comenzar"></button>
-        <p>Selecciona tu color de fondo y prepárate para tomarte una foto en pixel art.</p>
+        <p>Elige tu escenario y prepárate para tomarte una foto en Hacienda La Julieta.</p>
         <div class="field register-field">
           <input class="in" id="nameInLegacy" type="text" maxlength="28" placeholder="Ej. Felipe Ordóñez" autocomplete="name" tabindex="-1" aria-hidden="true" />
         </div>
@@ -1196,25 +1451,18 @@
     <div id="scGuide" class="guide-screen h">
       <div class="screen-shell">
         <div class="screen-frame screen-guide">
+          <div class="guide-texture"></div>
+          <img class="guide-logo" src="/figma/logo-crest.png" alt="Hacienda La Julieta" />
+          <h2 class="guide-title">INSTRUCCIONES</h2>
+          <ol class="guide-steps">
+            <li><strong>Selecciona el fondo:</strong> Elige el escenario que más te guste para tu foto.</li>
+            <li><strong>Prepárate para la foto:</strong> Mira directamente a la cámara, asegúrate de evitar sombras fuertes y de que tu cara esté bien iluminada. Mantente quieto cuando comience la cuenta regresiva.</li>
+            <li><strong>Generación de imagen:</strong> La IA procesará tu foto, espera unos segundos mientras se genera tu imagen.</li>
+            <li><strong>Escanea y guarda:</strong> Escanea el código QR para guardar tu foto. ¡Vive la experiencia en Hacienda La Julieta!</li>
+          </ol>
+          <div class="guide-btn-bg"></div>
+          <div class="guide-btn-label">Continuar</div>
           <button class="screen-hit guide-next" type="button" onclick="goToColorSelection()" aria-label="Continuar"></button>
-          <img class="screen-logo" src="/layers/Promologistics_Logo.png" alt="Promologistics" />
-          <div class="hero-kicker">INSTRUCCIONES</div>
-          <h2>PREPÁRATE PARA TU FOTO</h2>
-          <div class="guide-list">
-            <div class="guide-item">
-              <strong>1. MIRADA</strong>
-              <span>Mira directo a la cámara y mantén tu rostro dentro del encuadre.</span>
-            </div>
-            <div class="guide-item">
-              <strong>2. LUZ</strong>
-              <span>Evita sombras fuertes y procura que tu cara esté bien iluminada.</span>
-            </div>
-            <div class="guide-item">
-              <strong>3. POSE</strong>
-              <span>Mantente quieto unos segundos cuando empiece la cuenta regresiva.</span>
-            </div>
-          </div>
-          <div class="register-actions"><button class="btn bc" onclick="goToColorSelection()">ENTENDIDO, CONTINUAR</button></div>
         </div>
       </div>
     </div>
@@ -1225,12 +1473,9 @@
           <div class="color-picker-wrap" id="bgPicker"></div>
           <button class="screen-hit bg-submit" type="button" onclick="goToCamera()" aria-label="Continuar"></button>
           <img class="screen-logo" src="/layers/Promologistics_Logo.png" alt="Promologistics" />
-          <div class="hero-kicker">FONDO</div>
-          <h2>ELIGE TU COLOR</h2>
-          <p class="register-copy">Selecciona el color de fondo que quieres usar en tu poster final.</p>
-          <div class="color-picker-wrap-legacy">
-            <div class="bg-grid" id="bgPickerLegacy"></div>
-          </div>
+          <div class="hero-kicker">ESCENARIO</div>
+          <h2>ELIGE TU ESCENARIO</h2>
+          <p class="register-copy">Selecciona el escenario de Hacienda La Julieta donde quieres aparecer.</p>
           <div class="color-actions"><button class="btn bc" onclick="goToCamera()">LISTO, IR A LA CAMARA</button></div>
         </div>
       </div>
@@ -1242,14 +1487,21 @@
           <div class="camera-title">Mocion</div>
           <div class="camera-auto-copy" id="cameraCopy">Preparate para la foto</div>
           <video id="vid" autoplay playsinline muted></video>
+          <div class="camera-frame-border"></div>
           <img class="camera-frame-overlay h" id="cameraFrameOverlay" alt="" />
           <div class="cdo h" id="cdO">
             <div class="cdn" id="cdN">5</div>
           </div>
           <div class="fl h" id="flsh"></div>
-          <button class="screen-hit camera-repeat" type="button" onclick="backToBackgroundSelection()" aria-label="Repetir"></button>
+          <button class="camera-action camera-repeat" type="button" onclick="backToBackgroundSelection()" aria-label="Repetir">
+            <img src="/figma/icon-repetir.svg" alt="" />
+            <span>Repetir</span>
+          </button>
           <button class="screen-hit camera-capture" type="button" id="bCap" onclick="go()" aria-label="Tomar foto"></button>
-          <button class="screen-hit camera-upload" type="button" onclick="goNextFromCamera()" aria-label="Siguiente"></button>
+          <button class="camera-action camera-upload" type="button" onclick="goNextFromCamera()" aria-label="Siguiente">
+            <img src="/figma/icon-siguiente.svg" alt="" />
+            <span>Siguiente</span>
+          </button>
           <input type="file" id="fIn" accept="image/*" style="display:none" onchange="onFile(event)" />
         </div>
       </div>
@@ -1258,6 +1510,7 @@
     <div id="sc2" class="processing-screen h">
       <div class="processing-shell">
         <div class="processing-frame">
+          <img class="processing-logo" src="/figma/logo-crest.png" alt="Hacienda La Julieta" />
           <img id="prev" class="processing-preview h" alt="" />
           <div class="po">
             <div class="sp"></div>
@@ -1277,11 +1530,7 @@
           </div>
           <img class="result-frame-overlay h" id="resultFrameOverlay" alt="" />
           <button class="screen-hit result-repeat-hit" type="button" onclick="reset()" aria-label="Otra foto"></button>
-          <button class="screen-hit result-next-hit" type="button" onclick="dl()" aria-label="Siguiente"></button>
-          <div class="result-actions">
-            <button class="btn bd" onclick="dl()">SIGUIENTE</button>
-            <button class="btn bs br2" onclick="reset()">OTRA FOTO</button>
-          </div>
+          <button class="result-continue" type="button" onclick="dl()">Continuar</button>
         </div>
       </div>
     </div>
@@ -1289,24 +1538,29 @@
     <div id="sc4" class="thanks-screen h">
       <div class="thanks-shell">
         <div class="thanks-frame">
+          <img class="thanks-logo" src="/figma/logo-crest.png" alt="Hacienda La Julieta" />
+          <h2 class="thanks-title">¡Gracias por participar!</h2>
+          <p class="thanks-subtitle">Descarga tu imagen <strong>escaneando el siguiente código QR.</strong></p>
           <div class="thanks-qr-wrap">
             <div id="qrCode" class="thanks-qr-code" aria-live="polite"></div>
             <p id="qrStatus" class="thanks-qr-status">Preparando tu QR...</p>
             <a id="qrLink" class="thanks-qr-link h" href="#" target="_blank" rel="noopener noreferrer">Abrir foto</a>
           </div>
+          <div class="thanks-finish-bg"></div>
+          <div class="thanks-finish-label">Finalizar</div>
           <button class="screen-hit thanks-finish" type="button" onclick="finishExperience()" aria-label="Finalizar"></button>
         </div>
       </div>
     </div>
 
-    <div class="ft">PROMOLOGISTICS 2026</div>
+    <div class="ft">HACIENDA LA JULIETA</div>
   </div>
 
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-storage-compat.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
   <script>
-    let str = null, fm = "user", cap = null, participantName = "", selectedBackground = "fondo1";
+    let str = null, fm = "user", cap = null, participantName = "", selectedBackground = "ceremonia";
     let participantData = createEmptyParticipantData();
     let posterDataUrl = "", posterDownloadUrl = "", posterStoragePath = "", posterUploadPromise = null, posterUploadError = null, storageRef = null, posterUploadToken = 0;
     let autoCameraCountdownInterval = null, autoCameraStartTimeout = null, autoBackgroundAdvanceTimeout = null, isAutoCapturing = false;
@@ -1340,8 +1594,9 @@
     };
     let frameOverlayDataUrl = "";
     const BACKGROUND_OPTIONS = [
-      { id: "fondo1", label: "FONDO 1", color: "#69c1dd", base: "/layers/FONDO1.png" },
-      { id: "fondo2", label: "FONDO 2", color: "#193f74", base: "/layers/FONDO2.png" }
+      { id: "ceremonia", label: "Ceremonia", color: "#8a6b3d" },
+      { id: "salon", label: "Salon de Eventos", color: "#3a2f22" },
+      { id: "recepcion", label: "Recepcion al Atardecer", color: "#4a3a2a" }
     ];
     const BACKGROUND_PICKER_LAYOUT = {
       fondo1: { left: 29.95, top: 54.5, width: 36.1, height: 36.8 },
@@ -1900,7 +2155,7 @@
         addClientLog("Healthcheck del backend", h);
         if (!h.token_configured) throw new Error("Token no configurado");
         sPt("Espera el procesamiento de tu vision", "Aplicando el filtro");
-        const res = await fetch("/api/generate", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ photo: cap }) });
+        const res = await fetch("/api/generate", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ photo: cap, eventType: selectedBackground }) });
         const d = await res.json();
         if (!res.ok) throw new Error(d.error);
         sPt("Espera el procesamiento de tu vision", "Armando el marco final");
@@ -1939,25 +2194,8 @@
 
     async function overlay(src, { mode = "ai" } = {}) {
       try {
-        const [layers, subjectImg] = await Promise.all([
-          resolvePosterLayers(),
-          loadImage(src)
-        ]);
-
-        const cv = document.getElementById("cv");
-        const ctx = cv.getContext("2d");
-        cv.width = layers.width;
-        cv.height = layers.height;
-        ctx.clearRect(0, 0, layers.width, layers.height);
-        ctx.fillStyle = "#000";
-        ctx.fillRect(0, 0, layers.width, layers.height);
-        drawPosterBackground(ctx, layers.base, layers.width, layers.height);
-
-        const subjectCanvas = prepareSubject(subjectImg, mode);
-        drawSubject(ctx, subjectCanvas, layers.width, layers.height);
-
         posterUploadToken += 1;
-        posterDataUrl = cv.toDataURL("image/png");
+        posterDataUrl = src;
         document.getElementById("rImg").src = posterDataUrl;
         posterDownloadUrl = "";
         posterStoragePath = "";
@@ -1966,7 +2204,7 @@
         queuePosterUpload(posterUploadToken);
       } catch (err) {
         console.error(err);
-        sErr("No se pudo componer el poster");
+        sErr("No se pudo mostrar el resultado");
       }
     }
 
@@ -2469,12 +2707,11 @@
       picker.innerHTML = BACKGROUND_OPTIONS.map(option => `
         <button
           type="button"
-          class="color-choice ${option.id === selectedBackground ? "a" : ""}"
+          class="event-choice ${option.id} ${option.id === selectedBackground ? "a" : ""}"
           onclick="selectBackground('${option.id}')"
           aria-label="${option.label}"
           aria-pressed="${option.id === selectedBackground}"
           title="${option.label}"
-          style="left:${BACKGROUND_PICKER_LAYOUT[option.id].left}%;top:${BACKGROUND_PICKER_LAYOUT[option.id].top}%;width:${BACKGROUND_PICKER_LAYOUT[option.id].width}%;height:${BACKGROUND_PICKER_LAYOUT[option.id].height}%"
         ></button>
       `).join("");
     }
@@ -2602,7 +2839,6 @@
     setQrPlaceholder("Preparando tu QR...");
     updateQrStatus("Preparando tu QR...");
     renderBackgroundOptions();
-    applyFrameOverlay();
     bindRegisterForm();
     document.addEventListener("keydown", handleDebugShortcut);
     window.addEventListener("beforeunload", stopDebugPolling);
