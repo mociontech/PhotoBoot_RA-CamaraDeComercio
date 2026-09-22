@@ -2,6 +2,18 @@
   publish = "."
   functions = "netlify/functions"
 
+[build.environment]
+  # DATAHUB_SOURCE's value ("datahub") is not a secret, just a label used
+  # throughout the code (postToDatahub, etc.) which otherwise triggers false
+  # positives in Netlify's secrets scanner.
+  SECRETS_SCAN_OMIT_KEYS = "DATAHUB_SOURCE"
+
+[functions]
+  # The AI compositing needs the reference scenario photos bundled with the
+  # function (they are read from disk with fs, not require()d, so esbuild
+  # would not pick them up automatically).
+  included_files = ["public/Fondos/**"]
+
 [[redirects]]
   from = "/api/*"
   to = "/.netlify/functions/api/:splat"

@@ -1,24 +1,92 @@
-const Replicate = require("replicate");
+const fs = require("fs");
+const path = require("path");
+const OpenAI = require("openai");
+const { toFile } = require("openai/uploads");
 
-const REPLICATE_API_TOKEN = process.env.REPLICATE_API_TOKEN || "";
+const OPENAI_API_KEY = process.env.OPENAI_API_KEY || "";
 const DATAHUB_BASE_URL = (process.env.VITE_DATAHUB_URL || process.env.DATAHUB_URL || "").replace(/\/+$/, "");
 const DATAHUB_EVENT_ID = process.env.DATAHUB_EVENT_ID || "";
 const DATAHUB_EXPERIENCE_ID = process.env.DATAHUB_EXPERIENCE_ID || "";
 const DATAHUB_SOURCE = process.env.DATAHUB_SOURCE || "datahub";
 const DATAHUB_API_KEY = process.env.DATAHUB_API_KEY || "";
 const DEBUG_LOG_LIMIT = 120;
-const GEMINI_REPLICATE_MODEL =
-  "google/gemini-2.5-flash-image:445b89a5b905554df77db7eb582bcbe52fa3245d2a1aef63dd38f23d8f92aed2";
+const IMAGE_MODEL = "gpt-image-1";
+const BACKGROUNDS_DIR = path.join(__dirname, "..", "..", "public", "Fondos");
 
 const debugLogs = [];
 let nextDebugLogId = 1;
-let replicate = null;
+let openai = null;
 
-function getReplicateClient() {
-  if (!replicate) {
-    replicate = new Replicate({ auth: REPLICATE_API_TOKEN });
+function getOpenAIClient() {
+  if (!openai) {
+    openai = new OpenAI({ apiKey: OPENAI_API_KEY });
   }
-  return replicate;
+  return openai;
+}
+
+const IDENTITY_PROMPT =
+  "You are given two images: the first is a real photo of a real person, the second is a real venue scene at Hacienda La Julieta. " +
+  "Your only task is to place this exact person into the venue scene. This is a background replacement, not a face generation task. " +
+  "Do not redraw, restyle, beautify, slim, age, de-age or in any way alter the person's face or body. Copy their face pixel-for-pixel in structure: same face shape, same skin tone and texture, same hairstyle and hair color, same hairline, same eyebrows, same eye shape and eye color, same nose, same mouth and lip shape, same jawline, same ears, same glasses if present, same facial hair if present, same expression, same freckles/moles/scars if visible. " +
+  "The output must be immediately recognizable as the exact same individual as in the first photo, indistinguishable in identity from a real unedited photo of them, only placed in a new location. " +
+  "Keep the person's original pose, body proportions and camera framing from the first photo as much as possible. " +
+  "Blend the lighting, color temperature and shadows so the person looks naturally photographed in the venue scene, matching the ambiance of the second image. " +
+  "Do not change the venue architecture, decoration or other guests visible in the second image. " +
+  "Do not add any text, watermark, logo or UI element. Output a vertical 9:16 portrait.";
+
+const EVENT_TYPES = [
+  {
+    id: "ceremonia",
+    label: "Ceremonia",
+    file: "ChatGPT Image 17 sept 2026, 04_14_25 p.m. (1).png",
+    prompt:
+      IDENTITY_PROMPT +
+      " Event context: an elegant outdoor wedding ceremony at dusk, with a stone aisle lined with candles and white flowers, leading to a modern altar. " +
+      " Dress the person in elegant formal wedding-guest attire (suit or evening dress) consistent with the other guests, and place them naturally among the aisle or seating area without blocking the couple at the altar.",
+  },
+  {
+    id: "salon",
+    label: "Salon de Eventos",
+    file: "ChatGPT Image 17 sept 2026, 04_14_25 p.m. (2).png",
+    prompt:
+      IDENTITY_PROMPT +
+      " Event context: an elegant indoor event hall with warm wood ceiling panels, ambient lighting and cocktail tables, set up for a corporate or social gathering. " +
+      " Dress the person in elegant business or cocktail attire consistent with the other guests, and place them naturally near one of the cocktail tables or open floor area.",
+  },
+  {
+    id: "recepcion",
+    label: "Recepcion al Atardecer",
+    file: "ChatGPT Image 17 sept 2026, 04_14_25 p.m. (3).png",
+    prompt:
+      IDENTITY_PROMPT +
+      " Event context: an outdoor terrace reception at golden-hour dusk, with string lights, lounge furniture, lanterns and mountain views in the background. " +
+      " Dress the person in elegant evening cocktail attire consistent with the other guests, and place them naturally standing or seated in the terrace area.",
+  },
+];
+
+function isTokenConfigured() {
+  return OPENAI_API_KEY.length > 0 && OPENAI_API_KEY.startsWith("sk-");
+}
+
+function listBackgroundFiles() {
+  try {
+    return fs
+      .readdirSync(BACKGROUNDS_DIR)
+      .filter(name => /\.(png|jpe?g|webp)$/i.test(name))
+      .map(name => path.join(BACKGROUNDS_DIR, name));
+  } catch (err) {
+    return [];
+  }
+}
+
+function getEventType(id) {
+  return EVENT_TYPES.find(e => e.id === id) || null;
+}
+
+function dataUrlToBuffer(dataUrl) {
+  const match = /^data:(image\/\w+);base64,(.+)$/.exec(dataUrl);
+  if (!match) throw new Error("Formato de foto invalido");
+  return Buffer.from(match[2], "base64");
 }
 
 function baseHeaders(extra = {}) {
@@ -173,11 +241,17 @@ function getRequestPath(event) {
 }
 
 async function handleHealth() {
-  const ok = REPLICATE_API_TOKEN.length > 0 && REPLICATE_API_TOKEN.startsWith("r8_");
   return json(200, {
     status: "ok",
-    token_configured: ok,
+    token_configured: isTokenConfigured(),
+    backgrounds_available: listBackgroundFiles().length,
     datahub: getDatahubStatus(),
+  });
+}
+
+async function handleEventTypes() {
+  return json(200, {
+    eventTypes: EVENT_TYPES.map(({ id, label }) => ({ id, label })),
   });
 }
 
@@ -297,78 +371,46 @@ async function handleGenerate(event) {
   try {
     const body = parseBody(event);
     const photo = body?.photo;
+    const eventTypeId = body?.eventType;
     if (!photo) return json(400, { error: "No se envio foto" });
-    if (!REPLICATE_API_TOKEN || !REPLICATE_API_TOKEN.startsWith("r8_")) {
-      return json(400, { error: "Token no configurado" });
+    if (!isTokenConfigured()) return json(400, { error: "Token no configurado" });
+
+    const eventType = getEventType(eventTypeId) || EVENT_TYPES[0];
+    const backgroundPath = path.join(BACKGROUNDS_DIR, eventType.file);
+    if (!fs.existsSync(backgroundPath)) {
+      return json(500, { error: `Fondo no encontrado: ${eventType.file}` });
     }
 
-    addDebugLog("generate", "Generando personaje con Gemini (Replicate)", {
+    addDebugLog("generate", "Generando composicion con gpt-image-1 (OpenAI)", {
       hasPhoto: Boolean(photo),
+      eventType: eventType.id,
+      background: eventType.file,
     });
 
-    const mainPrompt =
-      "Edit the provided photo of this exact person. " +
-      "Identity preservation is the highest priority, more important than stylization. " +
-      "Preserve identity with very high fidelity: match the same face shape, hairstyle, hairline, eyebrow shape, eye spacing, nose shape, mouth shape, lips, jawline, ears, skin tone, glasses if present, facial hair if present, age range, expression, pose, body proportions, camera angle and framing. " +
-      "The result must still clearly look like the same person at first glance, not a generic attractive substitute. " +
-      "Transform only the person into a polished stylized 3D animated portrait with the look of a premium family animated feature film. " +
-      "Keep the style cinematic, warm, appealing and highly finished, with clean 3D modeling, smooth materials, soft global illumination, subtle subsurface scattering in skin, refined hair grooming and expressive but believable facial stylization. " +
-      "Preserve the exact identity while translating the person into stylized 3D animation: the same face shape, hairline, hairstyle, eyebrows, eye spacing, nose, mouth, jawline, ears, facial hair, smile, age range, skin tone and overall likeness must remain clearly recognizable. " +
-      "Match the clarity of a premium close-up animated portrait: very sharp eyes, eyebrows, nose bridge, lips, teeth when visible, ears, jawline and hairline, with no haze, no softness and no muddy shading. " +
-      "Make the final result look high-definition and production-quality: clean silhouettes, strong micro-contrast in the face, precise facial features, crisp hands, smooth but controlled shading, stable color rendering and a consistent premium poster-like finish every time. " +
-      "Consistency is critical: even if the source photo is slightly farther from the camera, preserve the same perceived sharpness, the same facial readability, and the same refined 3D animated finish instead of switching to a blurrier or simpler style. " +
-      "Prioritize face clarity over fabric texture. The face must read clearly even at a small poster size and should look sharper than the jersey. " +
-      "Allocate the highest level of detail to the face: eyes, eyelids, eyebrows, nose bridge, nostrils, lips, teeth when visible, cheekbones, jawline and beard shadow if present. " +
-      "If the face is smaller in the source photo, intelligently enhance and reconstruct facial detail while preserving exact identity; do not respond by making the face blurrier, flatter, or more generic. " +
-      "Hands must also be crisp and readable, with clean finger separation, defined knuckles and stable proportions when visible. " +
-      "Keep the torso, shoulders and hands logically visible, but they must be secondary to the face. The jersey can be simpler and less detailed than the facial features. " +
-      "If hands or gestures are visible, preserve them, but do not let the hands dominate the image or steal detail from the face. " +
-      "The face should receive more detail and more nuanced shading than any other part of the subject. " +
-      "Use nuanced but controlled shading and preserve recognizable likeness in the eyes, smile, glasses, beard stubble, nose bridge, mouth width and hair silhouette when those features exist in the photo. " +
-      "Use a rich cinematic palette: nuanced skin tones, clean highlights, refined shadows and clear separation between facial planes. " +
-      "Do not beautify, idealize, simplify or redesign the face. Keep the same imperfections, proportions and distinctive facial structure from the source photo. " +
-      "Compose the result as a balanced upper-body portrait from upper chest upward, not a long-torso shot. The face should be prominent but still proportional to the shoulders and torso. " +
-      "Keep anatomically realistic proportions: the head must not look oversized compared with the shoulders, chest or neck. Avoid bobblehead proportions. " +
-      "Show enough shoulders and upper chest to make the torso feel solid and natural. Do not show the waist, hips, full torso or large empty shirt area. Avoid tiny face and long body composition. " +
-      "Dress the person in a generic football jersey using Colombia flag colors: vivid yellow shirt, navy blue collar and sleeve trim, subtle red accents, plain fabric, plain shoulders, and no shoulder stripes. " +
-      "Do not include any brand logo, sports logo, adidas-style mark, nike-style mark, puma-style mark, abstract chest symbol, three stripes, crest, federation shield, badge, sponsor or trademarked symbol. " +
-      "The shirt must look plain and unbranded at first glance: the only chest element allowed is one very small simple rectangular Colombia flag patch. " +
-      "On the chest, use only a very small simple rectangular Colombia flag patch, clearly rectangular and never circular, made only of horizontal yellow, blue and red stripes with no text, no border and no emblem. " +
-      "Keep the head and shoulders centered in frame. Show only enough chest area to read the shirt design and the small flag patch. " +
-      "CRITICAL FRAMING REQUIREMENT: do not crop the subject. Keep the full visible torso, both arms, shoulders, elbows and hands from the source photo whenever they are present. " +
-      "Even if the original photo is wider or more open, preserve that full visible body area instead of zooming in to a tight bust crop. " +
-      "If a hand gesture is visible, keep the complete gesture with all fingers readable and fully inside the frame. " +
-      "The subject should still occupy most of the canvas height while keeping the full visible torso and arms, so the final character reads large and detailed in the poster. " +
-      "Do not invent props or gestures; preserve the original pose from the source photo. " +
-      "Remove the original background completely and replace it with a flat, uniform, solid chroma key background in pure magenta #FF00FF. " +
-      "The magenta background must be perfectly clean edge to edge with no gradients, shadows, reflections or extra elements. " +
-      "Output only the isolated pixel art person on the pure magenta background.";
+    const ext = path.extname(backgroundPath).toLowerCase();
+    const backgroundMime = ext === ".jpg" || ext === ".jpeg" ? "image/jpeg" : ext === ".webp" ? "image/webp" : "image/png";
 
-    const negPrompt =
-      "photorealistic render, gritty realism, rough painterly illustration, soft airbrush shading, blur, soft focus, haze, muddy rendering, heavy noise, low-detail face, low-detail eyes, low-detail mouth, low-detail hands, soft edges, fuzzy outline, weak contrast, low micro-contrast, muddy shading, washed shading, tiny face, blurry face when far away, simplified face when far away, long torso, too much shirt, too much empty chest area, full body, waist-up distant shot, over-detailed jersey, over-detailed hands, face less detailed than torso, generic facial features, flat lighting, harsh uncanny realism, lifeless skin, dead eyes, oversized head, bobblehead, narrow shoulders, tiny torso, long neck, cropped arms, cropped hands, cropped fingers, cropped shoulders, cut off elbows, cut off wrists, side-cropped body, clipped gesture, tight bust crop, missing torso, " +
-      "caricature, chibi, exaggerated head, anime style, low-budget cartoon style, toy-like proportions, generic face, face drift, identity drift, " +
-      "distorted face, asymmetrical eyes, wrong glasses, missing glasses, altered hairstyle, altered hair color, missing facial hair, wrong facial hair, extra fingers, extra limbs, cropped body, multiple people, " +
-      "black shirt, green shirt, plain casual hoodie, wrong jersey, no jersey, non-colombia jersey, brand logo, adidas logo, adidas-style logo, nike logo, puma logo, three stripes, shoulder stripes, sportswear logo, crest, shield, emblem, badge, sponsor logo, trademark symbol, abstract chest symbol, chest icon, circular patch, circular badge, round crest, federation emblem, " +
-      "stadium, crowd, field, grass, sky, banners, ads, text, watermark, typography, logos, frame, soccer ball, props, accessories, hat, cap, hood, " +
-      "gradient background, patterned background, shadows on background, non-magenta background, blurry outline, washed colors, different pose, different expression, different person";
+    const [photoFile, backgroundFile] = await Promise.all([
+      toFile(dataUrlToBuffer(photo), "photo.png", { type: "image/png" }),
+      toFile(fs.readFileSync(backgroundPath), eventType.file, { type: backgroundMime }),
+    ]);
 
-    const prompt = `${mainPrompt}\n\nAvoid: ${negPrompt}`;
-    const output = await getReplicateClient().run(GEMINI_REPLICATE_MODEL, {
-      input: {
-        prompt,
-        image_input: [photo],
-        aspect_ratio: "9:16",
-        output_format: "png",
-      },
+    const result = await getOpenAIClient().images.edit({
+      model: IMAGE_MODEL,
+      image: [photoFile, backgroundFile],
+      prompt: eventType.prompt,
+      size: "1024x1536",
     });
 
-    const imageUrl = Array.isArray(output) ? output[0] : output?.url || String(output);
+    const b64 = result.data?.[0]?.b64_json;
+    if (!b64) throw new Error("OpenAI no devolvio una imagen");
+    const imageUrl = `data:image/png;base64,${b64}`;
 
     addDebugLog("generate", "Imagen generada correctamente", {
-      model: GEMINI_REPLICATE_MODEL,
-      imageUrl,
+      model: IMAGE_MODEL,
+      eventType: eventType.id,
     });
-    return json(200, { success: true, imageUrl, model: GEMINI_REPLICATE_MODEL });
+    return json(200, { success: true, imageUrl, model: IMAGE_MODEL, eventType: eventType.id });
   } catch (err) {
     addDebugLog("generate", "Error generando imagen", { error: err.message });
     return json(500, { error: err.message });
@@ -393,6 +435,7 @@ exports.handler = async event => {
 
   try {
     if (method === "GET" && path === "/api/health") return await handleHealth();
+    if (method === "GET" && path === "/api/event-types") return await handleEventTypes();
     if (method === "GET" && path === "/api/debug/logs") return await handleDebugLogs(event);
     if (method === "POST" && path === "/api/datahub/attendees") return await handleAttendees(event);
     if (method === "POST" && path === "/api/datahub/experiences") return await handleExperiences(event);
